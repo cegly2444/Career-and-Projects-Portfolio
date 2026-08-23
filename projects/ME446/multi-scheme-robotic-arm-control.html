@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Scheme Control for Robotic Arm - Project Details</title>
+  <!-- MathJax for LaTeX -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      /* Default: Night Mode */
+      --bg-color: #0f172a;
+      --surface-bg: #1e293b;
+      --navbar-bg: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: #334155;
+      --primary-color: #60a5fa;
+      --primary-hover: #3b82f6;
+      --card-hover-shadow: rgba(0, 0, 0, 0.4);
+      --img-bg: #1e293b;
+    }
+
+    body.light-mode {
+      /* Overrides for Light Mode */
+      --bg-color: #f7fafc;
+      --surface-bg: #ffffff;
+      --navbar-bg: #navbar-bg;
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --border-color: #e2e8f0;
+      --primary-color: #2b6cb0;
+      --primary-hover: #1d4ed8;
+      --card-hover-shadow: rgba(0, 0, 0, 0.08);
+      --img-bg: #edf2f7;
+    }
+
+    /* --- BASE STYLES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* --- TOP NAVIGATION BAR --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--navbar-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .back-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Side-by-Side Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Button Style for Resume Link in Navbar */
+    .nav-link.resume-btn {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link.resume-btn:hover {
+      background-color: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    /* --- THEME TOGGLE SWITCH --- */
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch {
+      display: inline-block;
+      height: 26px;
+      position: relative;
+      width: 50px;
+    }
+
+    .theme-switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #334155;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.4s;
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .slider:before {
+      background-color: #ffffff;
+      bottom: 2px;
+      content: "";
+      height: 20px;
+      left: 2px;
+      position: absolute;
+      transition: 0.4s;
+      width: 20px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .slider .sun-icon,
+    .slider .moon-icon {
+      font-size: 12px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    input:checked+.slider {
+      background-color: #cbd5e1;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* --- PROJECT HEADER --- */
+    .project-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 3rem auto 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .project-header h1 {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    /* --- THREE COLUMN LAYOUT --- */
+    .project-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Sidebars styling */
+    .sidebar-left h3,
+    .sidebar-right h3 {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-color);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Right Sidebar: Collaborators */
+    /* Right Sidebar: Collaborators */
+    .collaborators-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .collaborator-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .collaborator-card:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    .collab-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .linkedin-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .collaborator-card:hover .linkedin-icon {
+      transform: scale(1.1);
+    }
+
+    /* Left Sidebar: Skills */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-badge {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    /* Code Links */
+    .code-links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .code-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+      width: 100%;
+    }
+
+    .code-link-btn:hover {
+      background-color: var(--border-color);
+      color: var(--primary-color);
+    }
+
+    .code-logo-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .code-link-btn:hover .code-logo-icon {
+      transform: scale(1.1);
+    }
+
+    /* Center: Main Scrollable Content */
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .media-container {
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      transition: background-color 0.3s, border-color 0.3s;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .media-container img,
+    .media-container video {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .media-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details h2 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.65;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details ul {
+      list-style-type: disc;
+      list-style-position: inside;
+      margin-left: 0;
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details li {
+      margin-bottom: 0.75rem;
+      text-indent: -2.25rem;
+      padding-left: 2.25rem;
+    }
+
+    /* --- 2x2 VIDEO GRID --- */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .video-grid .media-container {
+      width: 100%;
+      margin: 0;
+    }
+
+    /* --- RESPONSIVE LAYOUT --- */
+    @media (max-width: 900px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar-left {
+        order: 2;
+      }
+
+      .project-content {
+        order: 1;
+      }
+
+      .sidebar-right {
+        order: 3;
+      }
+
+      .media-container {
+        width: 100%;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+    }
+
+    /* --- LIGHTBOX MODAL --- */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #f8fafc;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .lightbox-content-wrapper {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .lightbox-content-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .lightbox-content {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.1s ease-out;
+      transform-origin: center center;
+    }
+
+    .lightbox-controls {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10001;
+    }
+
+    .lightbox-controls button {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .lightbox-controls button:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body id="home">
+
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="navbar">
+    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <div class="theme-switch-wrapper">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </div>
+      </label>
+    </div>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+      <a href="../../resume.pdf" target="_blank" class="nav-link resume-btn">Resume (PDF)</a>
+    </div>
+  </nav>
+
+  <!-- PROJECT HEADER -->
+  <header class="project-header">
+    <h1>Multi-Scheme Control for Robotic Arm</h1>
+  </header>
+
+  <!-- MAIN PROJECT LAYOUT -->
+  <main class="project-layout">
+
+    <!-- LEFT SIDEBAR: Skills & Code -->
+    <aside class="sidebar-left">
+      <div class="sidebar-section">
+        <h3>Project Code</h3>
+        <div class="code-links-container">
+          <a href="multi-scheme-robotic-arm-control-code.html?file=c" class="code-link-btn">
+            <img src="../../images/c_logo.webp" alt="C Logo" class="code-logo-icon" />
+            Control Loop (FINAL_PROJ.c)
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-section" style="margin-top: 2rem;">
+        <h3>Skills Used</h3>
+        <div class="skills-container">
+          <span class="skill-badge">Robotic Arms</span>
+          <span class="skill-badge">Path Planning</span>
+          <span class="skill-badge">C Programming</span>
+          <span class="skill-badge">PID Control</span>
+          <span class="skill-badge">Task Space Control</span>
+          <span class="skill-badge">Impedance Control</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Main Content (Scrollable Images and Text) -->
+    <section class="project-content">
+
+      <!-- Project Overview -->
+      <article class="scrollable-details">
+        <h2>Project Overview</h2>
+        <ul>
+          <li><strong>Course &amp; Context:</strong> Final cumulative project for my ME 446 (Robot
+            Dynamics and Control) course.</li>
+          <li><strong>Challenge:</strong> Guide a robotic arm's end effector peg a certain depth into a hole, then trace
+            a curved path with tight edges, then apply a ~5 Newtons to an egg.</li>
+          <li><strong>Methods Used:</strong> Task space control (Jacobian transpose), impedance control, friction
+            compensation, and smooth trajectory generation.<br>
+          </li>
+        </ul>
+      </article>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="demo_success.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Successful demo with a practice egg, later a real egg used successfully as well, but I
+          didn't record :(</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Control Architecture</h2>
+        <p>
+          The core logic governing the robotic arm is written in C (<code>FINAL_PROJ.c</code>) and executes in real-time
+          at 1000 Hz. The system utilizes multiple advanced control strategies simultaneously:
+        </p>
+        <ul>
+          <li><strong>Task
+              Space Control (Jacobian Transpose):</strong> Instead of commanding individual joint angles
+            directly (<strong>joint space control</strong>), the control law operates entirely in the Cartesian "World"
+            frame (<strong>task space control</strong>). The error between the
+            desired XYZ position and the end effector's actual position is calculated for use in a <strong>PD
+              controller</strong>. The necessary restorative
+            Cartesian forces are computed and then projected into individual motor joint torques using the
+            <strong>Jacobian
+              Transpose</strong> matrix.
+          </li>
+          <li><strong>Impedance
+              Control & Transformations:</strong> The robot actively changes its
+            <strong>compliance</strong> depending
+            on the task. By rotating the World frame error into a local "Node" frame (using a Z-axis rotation matrix),
+            the controller can assign different stiffnesses (Proportional/Derivative gains) to different local axes. For
+            example, when tracing a tight curve, the arm can be set to be physically "soft" in the X and Y axes to
+            easily slide along the walls, while remaining completely rigid in the Z axis to maintain height. These local
+            Node forces are then transformed back to the World frame before applying the <strong>Jacobian
+              Transpose</strong>.
+          </li>
+          <li><strong>Feedforward
+              Friction Compensation:</strong> The arm implements directional <strong>Coulomb and
+              viscous
+              friction compensation</strong>. By evaluating the real-time angular velocity of each joint, the system
+            applies an opposing <strong>feedforward
+              torque</strong> to cancel out the physical drag of the motors.
+            When velocity is near zero, a high viscous damping gain prevents jitter and stabilizes the joint.</li>
+        </ul>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Point Struct Instruction Set</h3>
+        <p>
+          The arm's sequence of actions is defined by an array of <code>point</code> structs. Each waypoint contains a
+          specific set of instructions that configures the controller dynamically as the arm reaches it:
+        </p>
+        <pre
+          style="background: var(--surface-bg); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; font-size: 0.9rem; overflow-x: auto; margin-bottom: 1rem;"><code style="color: var(--text-primary);">typedef struct point_tag {
+    float x;    <span style="color: var(--text-secondary);">// Target Cartesian X position in meters (World Frame)</span>
+    float y;    <span style="color: var(--text-secondary);">// Target Cartesian Y position in meters (World Frame)</span>
+    float z;    <span style="color: var(--text-secondary);">// Target Cartesian Z position in meters (World Frame)</span>
+    float thz;  <span style="color: var(--text-secondary);">// Rotation angle (Theta Z) to orient the "Node" stiffness frame</span>
+    float V;    <span style="color: var(--text-secondary);">// Desired travel velocity (m/s) to reach this point</span>
+    int mode;   <span style="color: var(--text-secondary);">// Impedance Mode (XYZSTIFF, ZSTIFF, XZSTIFF, XYSTIFF, LOWSTIFF)</span>
+} point;</code></pre>
+        <p>
+          The <code>thz</code> and <code>mode</code> parameters allow the controller to seamlessly transition between
+          rigid tracking and soft compliance on the fly. For instance, when applying force to a delicate egg, the arm
+          can switch to <strong>XYSTIFF</strong>
+          mode, allowing it to gently rest against the object in the Z direction
+          without breaking it.
+        </p>
+      </article>
+
+      <article class="scrollable-details">
+        <h2>Trajectory Generation</h2>
+        <p>
+          To move between the waypoints defined in the struct array smoothly, the controller employs a <strong>linear
+            trajectory
+            generator</strong>. When the arm is commanded to move from its current position to the next target point, it
+          doesn't
+          instantly jump the reference command to the final destination (which would cause a massive error spike and
+          violently jerk the arm).
+        </p>
+        <p>
+          Instead, the system calculates the 3D Cartesian distance (<code>distAB</code>) between the start point and the
+          end point. Using the desired velocity (<code>V</code>) specified in the target's struct, it determines the
+          total travel time required (<code>t_total = distAB / V</code>).
+        </p>
+        <p>
+          The exact trajectory equations executed in real-time to compute the instantaneous target position (\( x_D \),
+          \( y_D \), \( z_D \)) are:
+        </p>
+        <div
+          style="font-size: 1.1rem; text-align: center; margin: 1.5rem 0; overflow-x: auto; padding: 1rem; background: var(--surface-bg); border: 1px solid var(--border-color); border-radius: 8px;">
+          $$ x_D = \Delta x \frac{t - t_{start}}{t_{total}} + x_a $$
+          $$ y_D = \Delta y \frac{t - t_{start}}{t_{total}} + y_a $$
+          $$ z_D = \Delta z \frac{t - t_{start}}{t_{total}} + z_a $$
+        </div>
+        <p>
+          At every 1 ms control loop iteration, the elapsed time (\( t - t_{start} \)) is checked against \( t_{total}
+          \), and this linear
+          interpolation generates the next intermediate target position.
+          This ensures the end effector traces a perfectly straight line through 3D space at a constant, smooth velocity
+          between every waypoint, <strong>completely
+            eliminating step overshoots</strong> and jerky motor behavior.
+        </p>
+      </article>
+
+
+
+      <article class="scrollable-details">
+        <h2>Outcome</h2>
+        <p>We passed the final demonstration with flying colors! The project was incredibly rewarding and provided an invaluable hands-on opportunity to learn and apply advanced control methods on physical hardware.</p>
+      </article>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: Collaborators -->
+    <aside class="sidebar-right">
+      <h3>Collaborators</h3>
+      <div class="collaborators-list">
+        <!-- Collab 2: Christopher Egly -->
+        <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank" class="collaborator-card"
+          aria-label="Christopher Egly's LinkedIn Profile">
+          <span class="collab-name">Christopher Egly</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- IMAGE LIGHTBOX MODAL -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content-wrapper">
+      <img class="lightbox-content" id="lightbox-img" src="" alt="Expanded Image" />
+    </div>
+    <div class="lightbox-controls">
+      <button id="zoom-in-btn" title="Zoom In">➕</button>
+      <button id="zoom-out-btn" title="Zoom Out">➖</button>
+      <button id="reset-btn" title="Reset Zoom">🔄</button>
+    </div>
+  </div>
+
+  <script>
+    const toggleSwitch = document.querySelector('#checkbox');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    const localTheme = localStorage.getItem('theme');
+
+    let activeTheme = 'dark';
+    if (urlTheme === 'light' || urlTheme === 'dark') {
+      activeTheme = urlTheme;
+    } else if (localTheme === 'light' || localTheme === 'dark') {
+      activeTheme = localTheme;
+    }
+
+    const isLight = (activeTheme === 'light');
+    document.body.classList.toggle('light-mode', isLight);
+    toggleSwitch.checked = isLight;
+
+    function syncLinks(theme) {
+      document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+          const parts = href.split('?');
+          const basePath = parts[0];
+          const searchParams = new URLSearchParams(parts[1] || '');
+          searchParams.set('theme', theme);
+          link.setAttribute('href', basePath + '?' + searchParams.toString());
+        }
+      });
+    }
+
+    syncLinks(activeTheme);
+
+    toggleSwitch.addEventListener('change', (e) => {
+      const nextLight = e.target.checked;
+      const theme = nextLight ? 'light' : 'dark';
+
+      document.body.classList.toggle('light-mode', nextLight);
+      localStorage.setItem('theme', theme);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+
+      syncLinks(theme);
+    });
+
+    // Lightbox Functionality
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const wrapper = document.querySelector('.lightbox-content-wrapper');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    let zoomScale = 1;
+    let isPanning = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
+    // Attach click listener to all page images (except icons / sidebar links)
+    document.querySelectorAll('.project-content img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxModal.style.display = 'flex';
+        resetLightbox();
+      });
+    });
+
+    function resetLightbox() {
+      zoomScale = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+    }
+
+    function updateTransform() {
+      lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`;
+    }
+
+    // Close Modal
+    lightboxClose.addEventListener('click', closeModal);
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal || e.target === wrapper) {
+        closeModal();
+      }
+    });
+
+    // Close on outer touch for mobile
+    lightboxModal.addEventListener('touchstart', (e) => {
+      if (e.target === lightboxModal) {
+        closeModal();
+      }
+    });
+
+    function closeModal() {
+      lightboxModal.style.display = 'none';
+    }
+
+    // Escape Key Close
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Zoom Buttons
+    zoomInBtn.addEventListener('click', () => {
+      zoomScale = Math.min(zoomScale + 0.25, 4);
+      updateTransform();
+    });
+
+    zoomOutBtn.addEventListener('click', () => {
+      zoomScale = Math.max(zoomScale - 0.25, 0.5);
+      updateTransform();
+    });
+
+    resetBtn.addEventListener('click', resetLightbox);
+
+    // Mouse Wheel Zoom
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = 0.1;
+      if (e.deltaY < 0) {
+        zoomScale = Math.min(zoomScale + zoomFactor, 4);
+      } else {
+        zoomScale = Math.max(zoomScale - zoomFactor, 0.5);
+      }
+      updateTransform();
+    });
+
+    // Panning Functionality
+    wrapper.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+    });
+
+    // Touch support for mobile panning and pinch-to-zoom
+    let initialTouchDist = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isPanning = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      } else if (e.touches.length === 2) {
+        isPanning = false;
+        initialTouchDist = getTouchDist(e);
+      }
+    });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (isPanning && e.touches.length === 1) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateTransform();
+      } else if (e.touches.length === 2) {
+        const dist = getTouchDist(e);
+        const factor = dist / initialTouchDist;
+        zoomScale = Math.max(0.5, Math.min(4, zoomScale * factor));
+        initialTouchDist = dist;
+        updateTransform();
+      }
+    });
+
+    wrapper.addEventListener('touchend', () => {
+      isPanning = false;
+    });
+
+    function getTouchDist(e) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+  </script>
+
+</body>
+
+</html>

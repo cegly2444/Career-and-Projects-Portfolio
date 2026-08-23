@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLAM Golf Putter - Project Details</title>
+
+  <!-- MathJax for rendering LaTeX math formulas -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      /* Default: Night Mode */
+      --bg-color: #0f172a;
+      --surface-bg: #1e293b;
+      --navbar-bg: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: #334155;
+      --primary-color: #60a5fa;
+      --primary-hover: #3b82f6;
+      --card-hover-shadow: rgba(0, 0, 0, 0.4);
+      --img-bg: #1e293b;
+    }
+
+    body.light-mode {
+      /* Overrides for Light Mode */
+      --bg-color: #f7fafc;
+      --surface-bg: #ffffff;
+      --navbar-bg: #ffffff;
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --border-color: #e2e8f0;
+      --primary-color: #2b6cb0;
+      --primary-hover: #1d4ed8;
+      --card-hover-shadow: rgba(0, 0, 0, 0.08);
+      --img-bg: #edf2f7;
+    }
+
+    /* --- BASE STYLES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* --- TOP NAVIGATION BAR --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--navbar-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .back-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Side-by-Side Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Button Style for Resume Link in Navbar */
+    .nav-link.resume-btn {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link.resume-btn:hover {
+      background-color: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    /* --- THEME TOGGLE SWITCH --- */
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch {
+      display: inline-block;
+      height: 26px;
+      position: relative;
+      width: 50px;
+    }
+
+    .theme-switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #334155;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.4s;
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .slider:before {
+      background-color: #ffffff;
+      bottom: 2px;
+      content: "";
+      height: 20px;
+      left: 2px;
+      position: absolute;
+      transition: 0.4s;
+      width: 20px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .slider .sun-icon,
+    .slider .moon-icon {
+      font-size: 12px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    input:checked+.slider {
+      background-color: #cbd5e1;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* --- PROJECT HEADER --- */
+    .project-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 3rem auto 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .project-header h1 {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    /* --- THREE COLUMN LAYOUT --- */
+    .project-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Sidebars styling */
+    .sidebar-left h3,
+    .sidebar-right h3 {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-color);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Right Sidebar: Collaborators */
+    /* Right Sidebar: Collaborators */
+    .collaborators-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .collaborator-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .collaborator-card:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    .collab-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .linkedin-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .collaborator-card:hover .linkedin-icon {
+      transform: scale(1.1);
+    }
+
+    /* Left Sidebar: Skills */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-badge {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    /* Code Links */
+    .code-links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .code-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+      width: 100%;
+    }
+
+    .code-link-btn:hover {
+      background-color: var(--border-color);
+      color: var(--primary-color);
+    }
+
+    .code-logo-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .code-link-btn:hover .code-logo-icon {
+      transform: scale(1.1);
+    }
+
+    /* Center: Main Scrollable Content */
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .media-container {
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      transition: background-color 0.3s, border-color 0.3s;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .media-container img,
+    .media-container video {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .media-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details h2 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.65;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details ul {
+      list-style-type: disc;
+      list-style-position: inside;
+      margin-left: 0;
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details li {
+      margin-bottom: 0.75rem;
+      text-indent: -2.25rem;
+      padding-left: 2.25rem;
+    }
+
+    /* --- 2x2 VIDEO GRID --- */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .video-grid .media-container {
+      width: 100%;
+      margin: 0;
+    }
+
+    /* --- RESPONSIVE LAYOUT --- */
+    @media (max-width: 900px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar-left {
+        order: 2;
+      }
+
+      .project-content {
+        order: 1;
+      }
+
+      .sidebar-right {
+        order: 3;
+      }
+
+      .media-container {
+        width: 100%;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+    }
+
+    /* --- LIGHTBOX MODAL --- */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #f8fafc;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .lightbox-content-wrapper {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .lightbox-content-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .lightbox-content {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.1s ease-out;
+      transform-origin: center center;
+    }
+
+    .lightbox-controls {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10001;
+    }
+
+    .lightbox-controls button {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .lightbox-controls button:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    /* --- MERMAID DIAGRAM OVERRIDES --- */
+    .fsm-container svg {
+      max-width: 100%;
+      height: auto;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+
+    /* Match diagram font family and size with the rest of the page */
+    .fsm-container svg * {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      font-size: 1rem !important;
+    }
+
+    /* Improve contrast of transition description backgrounds */
+    .fsm-container svg .edgeLabel rect {
+      fill: var(--bg-color) !important;
+      fill-opacity: 0.95 !important;
+      stroke: var(--border-color) !important;
+      stroke-width: 1px !important;
+      rx: 4px;
+      /* rounded corners */
+      ry: 4px;
+    }
+
+    .fsm-container svg .edgeLabel span,
+    .fsm-container svg .edgeLabel div {
+      background-color: var(--bg-color) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 4px !important;
+      padding: 4px 8px !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+      display: inline-block !important;
+    }
+
+    /* Center text inside state bubbles */
+    .fsm-container svg .node text,
+    .fsm-container svg .node tspan {
+      text-anchor: middle !important;
+    }
+
+    .fsm-container svg .node .label,
+    .fsm-container svg .node .nodeLabel,
+    .fsm-container svg .node .label div,
+    .fsm-container svg .node .label span {
+      text-align: center !important;
+    }
+  </style>
+</head>
+
+<body id="home">
+
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="navbar">
+    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <div class="theme-switch-wrapper">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </div>
+      </label>
+    </div>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+      <a href="../../resume.pdf" target="_blank" class="nav-link resume-btn">Resume (PDF)</a>
+    </div>
+  </nav>
+
+  <!-- PROJECT HEADER -->
+  <header class="project-header">
+    <h1>SLAM Golf Putter</h1>
+  </header>
+
+  <!-- MAIN PROJECT LAYOUT -->
+  <main class="project-layout">
+
+    <!-- LEFT SIDEBAR: Skills & Code -->
+    <aside class="sidebar-left">
+      <div class="sidebar-section">
+        <h3>Project Code</h3>
+        <div class="code-links-container">
+          <a href="slam-golf-putter-code.html?file=c" class="code-link-btn">
+            <img src="../../images/c_logo.webp" alt="C Logo" class="code-logo-icon" />
+            Main Loop (FinalProjMain.c)
+          </a>
+          <a href="https://github.com/yuan41/SE423_repo/tree/main/workspace/FinalProject_NM_CE_JY_RW"
+            class="code-link-btn">
+            <img src="../../images/github_logo.png" alt="GitHub Logo" class="code-logo-icon" />
+            Full Repository
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-section" style="margin-top: 2rem;">
+        <h3>Skills Used</h3>
+        <div class="skills-container">
+          <span class="skill-badge">Navigation</span>
+          <span class="skill-badge">SLAM</span>
+          <span class="skill-badge">Computer Vision</span>
+          <span class="skill-badge">C</span>
+          <span class="skill-badge">LabVIEW</span>
+          <span class="skill-badge">State Machines</span>
+          <span class="skill-badge">LiDAR</span>
+          <span class="skill-badge">Low-Level Control</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Main Content (Scrollable Images and Text) -->
+    <section class="project-content">
+
+      <!-- Project Overview -->
+      <article class="scrollable-details">
+        <h2>Project Overview</h2>
+        <ul>
+          <li><strong>Course &amp; Assignment:</strong> Final project for SE 423 (Mechatronics) where the goal was to
+            execute a
+            unique robotics project involving <strong>path planning, perception, and control systems</strong></li>
+          <li><strong>Objective:</strong> Utilize a robotic car to map an arena and autonomously
+            navigate to find a golf ball and launch it into a cup.</li>
+          <li><strong>My Role:</strong> SLAM mapping, gradient-descent navigation, state machine logic, and
+            LABVIEW visualization.</li>
+        </ul>
+      </article>
+
+      <!-- LabVIEW Video -->
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="demo_labview.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Demo with real-time mapping in LABVIEW. Unfortunately this was a miss, though a success
+          can be found lower in the page without a live LABVIEW video.</p>
+      </div>
+
+      <!-- FSM Section -->
+      <article class="scrollable-details">
+        <h2>State Machine &amp; Control Flow</h2>
+        <p>
+          The robot's autonomous decision-making routine was governed by a <strong>Finite State Machine (FSM)</strong>.
+          The chart below illustrates the transition conditions and core subroutines executed inside each state to map
+          the arena, acquire the ball, and score:
+        </p>
+      </article>
+
+      <!-- Interactive FSM Diagram Card -->
+      <div class="media-container fsm-container"
+        style="background-color: var(--surface-bg); padding: 1.5rem; overflow-x: auto;">
+        <pre class="mermaid">
+stateDiagram-v2
+    [*] --> State_0: Initialization completed
+
+    state "<b>State 0: Map & Search Arena</b><br/>• Follows right wall, avoiding obstacles<br/>• Searches for ball and goal<br/>• Maps ball, goal, obstacles, and walls" as State_0
+    state "<b>State 1: Finish Arena Search</b><br/>• If ball/goal not found yet, employ<br/>grid search of current map<br/>• Maps ball, goal, obstacles, & walls" as State_1
+    state "<b>State 10: Line Up Shot</b><br/>• Navigate behind ball relative to goal,<br/>avoiding & mapping obstacles<br/>• Turn towards ball" as State_10
+    state "<b>State 20: Ball Acquisition</b><br/>• Open kicker cover<br/>• Move forward to position ball<br/>in front of kicker" as State_20
+    state "<b>State 21: Drive Towards Goal</b><br/>• Navigate to goal, avoiding<br/>& mapping obstacles<br/>• Lower kicker cover to capture ball<br/>• Approach goal" as State_21
+    state "<b>State 22: Score!</b><br/>• Turn towards goal<br/>• Open kicker cover<br/>• Kick ball into goal" as State_22
+    State_0 --> State_1 : • Mapped outer wall<br/>(returned to start)<br/>• Ball/goal not found
+    State_1 --> State_10 : • Ball & goal found
+    State_0 --> State_10 : • Mapped outer wall<br/>(returned to start)<br/>• Ball & goal found
+
+    State_10 --> State_20 : • Reached target<br/>position & heading
+    State_20 --> State_21 : • Ball in front of kicker<br/>(drove forward for<br/>calculated time)
+    State_21 --> State_22 : • &lt; 3 feet from goal
+        </pre>
+      </div>
+
+      <!-- Mapping Text -->
+      <article class="scrollable-details">
+        <h2>Mapping &amp; Exploration</h2>
+        <p>
+          <strong>Simultaneous Localization and Mapping (SLAM)</strong> was implemented by fusing <strong>dead reckoning
+            odometry</strong> with <strong>LIDAR range scanning</strong>. Localized pose estimation (absolute
+          coordinates $x_{abs}$, $y_{abs}$ in feet and orientation
+          $\theta$
+          in radians) was tracked by integrating optical wheel encoder values and IMU gyro outputs at a high frequency:
+        </p>
+        $$x_{t} = x_{t-1} + \cos(\theta_{t}) \cdot V_{avg} \cdot dt$$
+        $$y_{t} = y_{t-1} + \sin(\theta_{t}) \cdot V_{avg} \cdot dt$$
+        <p>
+          To map the arena, the robot initially executed a proportional <strong>Right Wall Following</strong> algorithm
+          (<code>rightWallFollow()</code>) during <code>State 0</code>. This autonomous wall-tracing routine allowed the
+          LiDAR sensor to sweep the boundaries and construct the outer map outline.
+        </p>
+        <p>
+          The occupancy grid was stored in a 2D integer array of size $101 \times 101$ cells
+          (<code>map[101][101]</code>). <strong>Coordinate transformations</strong> mapped absolute coordinates
+          $(x_{abs}, y_{abs})$ into
+          discrete grid indices $(x_{idx}, y_{idx})$:
+        </p>
+        $$x_{idx} = \text{floor}\left(x_{abs} \cdot 3\right) + 50$$
+        $$y_{idx} = -\text{floor}\left(y_{abs} \cdot 3\right) + 50$$
+        <p>
+          The scaling factor of <code>3</code> (<code>UNIT_MAP1_LEN_INV</code>) yields a resolution of 4 inches per grid
+          cell, while the offset of <code>50</code> shifts the absolute origin $(0, 0)$ to the center of the array.
+        </p>
+        <p>
+          When range measurements identified an obstacle, the corresponding cell was incremented by +9 (capping at
+          +30). To eliminate transient "ghost" obstacles, a ray-clearing function (<code>clearPath()</code>) ran
+          <strong>Bresenham's line algorithm</strong> along the line-of-sight between the robot's current cell and the
+          obstacle hit.
+          Cells traversed by the beam were decremented by -4 (flooring at -30). If a cell's confidence value flipped
+          below 0, it was dynamically cleared.
+        </p>
+        <p>
+          Perception of dynamic target items was handled by a front-mounted camera.
+          The camera used <strong>color-based blob detection</strong> to locate colorful golf balls and <strong>AprilTag
+            detection</strong> to track the scoring goal.
+          When either target was spotted within the camera's field of view, the control loop temporarily stopped forward
+          translation ($V_{ref} = 0.0$) and turned the chassis to center the target in the image frame.
+          Once centered, the robot calculated the absolute range to the target:
+        </p>
+        $$d_{goal} = |tag_z \cdot 0.00425| + \frac{3.5}{12}$$
+        $$d_{ball} = \left(264.2167 - 6.144 \cdot Row + 0.0523 \cdot Row^2 - 0.00015432 \cdot Row^3\right) \cdot
+        0.08333$$
+        <p>
+          Using this distance and the robot's current pose, the system resolved the absolute coordinates:
+        </p>
+        $$x_{target} = x_{abs} + d_{target} \cdot \cos(\theta)$$
+        $$y_{target} = y_{abs} + d_{target} \cdot \sin(\theta)$$
+        <p>
+          Once these coordinates were resolved, the target items were written into the occupancy grid map to dynamically
+          define navigation waypoints.
+        </p>
+        <p>
+          To optimize serial bandwidth, coordinate updates were only queued when their occupancy state sign flipped.
+          These events were pushed to a custom <code>RingBuffer LVbuffer</code> and popped (<code>rb_pop()</code>) to be
+          sent over serial to LabVIEW. Because the updates were queued and transmitted sequentially at a throttled low
+          frequency, the LabVIEW visualization in the video exhibits a distinct lag/delay behind the robot's real-time
+          movement.
+        </p>
+      </article>
+
+      <!-- Gradient Descent Navigation -->
+      <article class="scrollable-details">
+        <h2>Gradient Descent Navigation</h2>
+        <p>
+          Autonomous navigation was driven by a virtual <strong>Potential Field Path Planner</strong> implementing
+          gradient descent. During <code>State 1</code> (exploration), <code>State 10</code> (line-up), and
+          <code>State 21</code> (kicking approach), the controller continuously calculated attractive forces pulling the
+          robot toward targeted waypoints and repulsive forces pushing it away from mapped obstacle regions.
+        </p>
+        <p>
+          In this path-planning framework, the targeted coordinates act as a <strong>well</strong> (the lowest potential
+          valley, creating a strong attractive pull). Conversely, walls, obstacles, and the golf ball itself act as
+          <strong>peaks</strong> (regions of maximum potential and high cost). The robot will then "roll down the hill",
+          or travel on a path that pushes it from regions of high potential to regions of low potential.
+        </p>
+        <!-- Gradient Descent Video -->
+        <div class="media-container">
+          <video autoplay loop muted playsinline controls style="max-height: 380px; object-fit: contain;">
+            <source src="gradient_descent_in_2d.webm" type="video/webm">
+            Your browser does not support the video tag.
+          </video>
+          <p class="media-caption">2D Gradient Descent Simulation. The wells (valleys) represent target
+            positions, while the peaks represent obstacles, walls, and the golf ball to prevent collisions. Source:
+            <a href="https://en.wikipedia.org/wiki/Gradient_descent">Wikipedia</a>
+          </p>
+        </div>
+        <br>
+        <p>
+          The controller solved the cumulative potential gradient at the robot's current position to determine the
+          desired velocity vectors $V_x$ and $V_y$:
+        </p>
+        $$V_x = k_{goal} \cdot (x_{target} - x_{robot}) + \sum \frac{k_{obs}}{2 \cdot d_{obs}^4} \cdot dx_{obs} +
+        \frac{k_{ball}}{2 \cdot d_{ball}^4} \cdot dx_{ball}$$
+        $$V_y = k_{goal} \cdot (y_{target} - y_{robot}) + \sum \frac{k_{obs}}{2 \cdot d_{obs}^4} \cdot dy_{obs} +
+        \frac{k_{ball}}{2 \cdot d_{ball}^4} \cdot dy_{ball}$$
+        <p>
+          By adjusting the velocity command magnitude ($V_{ref}$) and heading rate command ($\omega_{turn}$) to descend
+          this gradient, the robot steered smooth trajectories around obstacles and the ball:
+        </p>
+        $$\theta_{desired} = \text{atan2}(-V_y, V_x)$$
+        $$\omega_{turn} = -k_{turn} \cdot (\theta_{desired} - \theta_{robot})$$
+      </article>
+
+      <!-- Success Video -->
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="demo_success.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Autonomous Path Completion and Successful Putt.</p>
+      </div>
+
+      <!-- Outcome -->
+      <article class="scrollable-details">
+        <h2>Outcome</h2>
+        <p>
+          The robot was able to successfully navigate around obstacles, find the golf ball, and putt it into the cup.
+          While the autonomous navigation and aiming worked reliably, the launch mechanism seemed to have a lot of
+          directional variation, leading to unreliable short range putts. That said, I'm very proud of the navigation
+          and SLAM algorithms, and I learned a lot about these algorithms as well as low level control, and I had a
+          great time doing it. Above is a video of the robot successfully putting the ball, and below is my wonderful
+          team :)
+        </p>
+      </article>
+
+      <!-- Team Pic -->
+      <div class="media-container">
+        <img src="Team Pic.jpg" alt="SLAM Golf Putter team assembly and system testing setup" />
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: Collaborators -->
+    <aside class="sidebar-right">
+      <h3>Collaborators</h3>
+      <div class="collaborators-list">
+        <!-- Collab 2: Christopher Egly -->
+        <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank" class="collaborator-card"
+          aria-label="Christopher Egly's LinkedIn Profile">
+          <span class="collab-name">Christopher Egly</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+        <!-- Collab 4: Jiatian Yuan -->
+        <a href="https://www.linkedin.com/in/jiatian-yuan/" target="_blank" class="collaborator-card"
+          aria-label="Jiatian Yuan's LinkedIn Profile">
+          <span class="collab-name">Jiatian Yuan</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+        <!-- Collab 5: Reid G. Wollen -->
+        <a href="https://www.linkedin.com/in/reid-g-wollen/" target="_blank" class="collaborator-card"
+          aria-label="Reid Wollen's LinkedIn Profile">
+          <span class="collab-name">Reid Wollen</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- IMAGE LIGHTBOX MODAL -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content-wrapper">
+      <img class="lightbox-content" id="lightbox-img" src="" alt="Expanded Image" />
+    </div>
+    <div class="lightbox-controls">
+      <button id="zoom-in-btn" title="Zoom In">➕</button>
+      <button id="zoom-out-btn" title="Zoom Out">➖</button>
+      <button id="reset-btn" title="Reset Zoom">🔄</button>
+    </div>
+  </div>
+
+  <script>
+    const toggleSwitch = document.querySelector('#checkbox');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    const localTheme = localStorage.getItem('theme');
+
+    let activeTheme = 'dark';
+    if (urlTheme === 'light' || urlTheme === 'dark') {
+      activeTheme = urlTheme;
+    } else if (localTheme === 'light' || localTheme === 'dark') {
+      activeTheme = localTheme;
+    }
+
+    const isThemeLight = (activeTheme === 'light');
+    document.body.classList.toggle('light-mode', isThemeLight);
+    toggleSwitch.checked = isThemeLight;
+
+    function syncLinks(theme) {
+      document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+          const parts = href.split('?');
+          const basePath = parts[0];
+          const searchParams = new URLSearchParams(parts[1] || '');
+          searchParams.set('theme', theme);
+          link.setAttribute('href', basePath + '?' + searchParams.toString());
+        }
+      });
+    }
+
+    syncLinks(activeTheme);
+
+    toggleSwitch.addEventListener('change', (e) => {
+      const nextLight = e.target.checked;
+      const theme = nextLight ? 'light' : 'dark';
+
+      document.body.classList.toggle('light-mode', nextLight);
+      localStorage.setItem('theme', theme);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+
+      syncLinks(theme);
+
+      // Reload page to re-render Mermaid diagram theme colors
+      window.location.reload();
+    });
+
+    // Lightbox Functionality
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const wrapper = document.querySelector('.lightbox-content-wrapper');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    let zoomScale = 1;
+    let isPanning = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
+    // Attach click listener to all page images (except icons / sidebar links)
+    document.querySelectorAll('.project-content img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxModal.style.display = 'flex';
+        resetLightbox();
+      });
+    });
+
+    function resetLightbox() {
+      zoomScale = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+    }
+
+    function updateTransform() {
+      lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`;
+    }
+
+    // Close Modal
+    lightboxClose.addEventListener('click', closeModal);
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal || e.target === wrapper) {
+        closeModal();
+      }
+    });
+
+    // Close on outer touch for mobile
+    lightboxModal.addEventListener('touchstart', (e) => {
+      if (e.target === lightboxModal) {
+        closeModal();
+      }
+    });
+
+    function closeModal() {
+      lightboxModal.style.display = 'none';
+    }
+
+    // Escape Key Close
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Zoom Buttons
+    zoomInBtn.addEventListener('click', () => {
+      zoomScale = Math.min(zoomScale + 0.25, 4);
+      updateTransform();
+    });
+
+    zoomOutBtn.addEventListener('click', () => {
+      zoomScale = Math.max(zoomScale - 0.25, 0.5);
+      updateTransform();
+    });
+
+    resetBtn.addEventListener('click', resetLightbox);
+
+    // Mouse Wheel Zoom
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = 0.1;
+      if (e.deltaY < 0) {
+        zoomScale = Math.min(zoomScale + zoomFactor, 4);
+      } else {
+        zoomScale = Math.max(zoomScale - zoomFactor, 0.5);
+      }
+      updateTransform();
+    });
+
+    // Panning Functionality
+    wrapper.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+    });
+
+    // Touch support for mobile panning and pinch-to-zoom
+    let initialTouchDist = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isPanning = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      } else if (e.touches.length === 2) {
+        isPanning = false;
+        initialTouchDist = getTouchDist(e);
+      }
+    });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (isPanning && e.touches.length === 1) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateTransform();
+      } else if (e.touches.length === 2) {
+        const dist = getTouchDist(e);
+        const factor = dist / initialTouchDist;
+        zoomScale = Math.max(0.5, Math.min(4, zoomScale * factor));
+        initialTouchDist = dist;
+        updateTransform();
+      }
+    });
+
+    wrapper.addEventListener('touchend', () => {
+      isPanning = false;
+    });
+
+    function getTouchDist(e) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+  </script>
+
+  <!-- Include Mermaid JS dynamically -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    const isMermaidLight = document.body.classList.contains('light-mode');
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: isMermaidLight ? 'neutral' : 'dark',
+      themeVariables: {
+        fontSize: '16px',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      },
+      state: {
+        useMaxWidth: false
+      }
+    });
+  </script>
+
+</body>
+
+</html>

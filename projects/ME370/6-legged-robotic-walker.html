@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6-Legged Robotic Walker - Project Details</title>
+  <!-- Import Model Viewer Element -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+  <style>
+    :root {
+      /* Default: Night Mode */
+      --bg-color: #0f172a;
+      --surface-bg: #1e293b;
+      --navbar-bg: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: #334155;
+      --primary-color: #60a5fa;
+      --primary-hover: #3b82f6;
+      --card-hover-shadow: rgba(0, 0, 0, 0.4);
+      --img-bg: #1e293b;
+    }
+
+    body.light-mode {
+      /* Overrides for Light Mode */
+      --bg-color: #f7fafc;
+      --surface-bg: #ffffff;
+      --navbar-bg: #ffffff;
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --border-color: #e2e8f0;
+      --primary-color: #2b6cb0;
+      --primary-hover: #1d4ed8;
+      --card-hover-shadow: rgba(0, 0, 0, 0.08);
+      --img-bg: #edf2f7;
+    }
+
+    /* --- BASE STYLES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--bg-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* --- TOP NAVIGATION BAR --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--navbar-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .back-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Side-by-Side Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+
+    /* Button Style for Resume Link in Navbar */
+    .nav-link.resume-btn {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link.resume-btn:hover {
+      background-color: var(--primary-hover);
+      color: #ffffff;
+    }
+
+    /* --- THEME TOGGLE SWITCH --- */
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch {
+      display: inline-block;
+      height: 26px;
+      position: relative;
+      width: 50px;
+    }
+
+    .theme-switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #334155;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.4s;
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .slider:before {
+      background-color: #ffffff;
+      bottom: 2px;
+      content: "";
+      height: 20px;
+      left: 2px;
+      position: absolute;
+      transition: 0.4s;
+      width: 20px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .slider .sun-icon,
+    .slider .moon-icon {
+      font-size: 12px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    input:checked+.slider {
+      background-color: #cbd5e1;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* --- PROJECT HEADER --- */
+    .project-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 3rem auto 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .project-header h1 {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    /* --- THREE COLUMN LAYOUT --- */
+    .project-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Sidebars styling */
+    .sidebar-left h3,
+    .sidebar-right h3 {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-color);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Right Sidebar: Collaborators */
+    .collaborators-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .collaborator-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .collaborator-card:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    .collab-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .linkedin-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .collaborator-card:hover .linkedin-icon {
+      transform: scale(1.1);
+    }
+
+    /* Left Sidebar: Skills */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-badge {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    /* Center: Main Scrollable Content */
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .media-container {
+      background-color: var(--surface-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      transition: background-color 0.3s, border-color 0.3s;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .media-container img,
+    .media-container video {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .media-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details h2 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.65;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details ul {
+      list-style-type: disc;
+      list-style-position: inside;
+      margin-left: 0;
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details li {
+      margin-bottom: 0.75rem;
+      text-indent: -2.25rem;
+      padding-left: 2.25rem;
+    }
+
+    /* --- 2x2 VIDEO GRID --- */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .video-grid .media-container {
+      width: 100%;
+      margin: 0;
+    }
+
+    /* --- RESPONSIVE LAYOUT --- */
+    @media (max-width: 900px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar-left {
+        order: 2;
+      }
+
+      .project-content {
+        order: 1;
+      }
+
+      .sidebar-right {
+        order: 3;
+      }
+
+      .media-container {
+        width: 100%;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+    }
+
+    /* --- LIGHTBOX MODAL --- */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #f8fafc;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .lightbox-content-wrapper {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .lightbox-content-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .lightbox-content {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.1s ease-out;
+      transform-origin: center center;
+    }
+
+    .lightbox-controls {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10001;
+    }
+
+    .lightbox-controls button {
+      background-color: var(--surface-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .lightbox-controls button:hover {
+      background-color: var(--border-color);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body id="home">
+
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="navbar">
+    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <div class="theme-switch-wrapper">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </div>
+      </label>
+    </div>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+      <a href="../../resume.pdf" target="_blank" class="nav-link resume-btn">Resume (PDF)</a>
+    </div>
+  </nav>
+
+  <!-- PROJECT HEADER -->
+  <header class="project-header">
+    <h1>6-Legged Robotic Walker</h1>
+  </header>
+
+  <!-- MAIN PROJECT LAYOUT -->
+  <main class="project-layout">
+
+    <!-- LEFT SIDEBAR: Skills & Code -->
+    <aside class="sidebar-left">
+      <div class="sidebar-section">
+        <h3>Skills Used</h3>
+        <div class="skills-container">
+          <span class="skill-badge">Linkage Synthesis</span>
+          <span class="skill-badge">Kinematics</span>
+          <span class="skill-badge">Mechanical Design</span>
+          <span class="skill-badge">Mobile Robotics</span>
+          <span class="skill-badge">Gearing</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Main Content (Scrollable Images and Text) -->
+    <section class="project-content">
+
+      <!-- Interactive 3D Model Viewer -->
+      <div class="media-container" style="height: 450px;">
+        <model-viewer src="legged_walker.glb" alt="3D model of 6-Legged Robotic Walker" auto-rotate camera-controls
+          shadow-intensity="1" environment-image="neutral"
+          style="width: 100%; height: 100%; background-color: var(--img-bg); border-radius: 6px;">
+        </model-viewer>
+        <p class="media-caption">Interactive 3D CAD Assembly of Legged Walker (Click and drag to rotate, scroll to
+          zoom).</p>
+      </div>
+
+      <!-- Project Overview -->
+      <article class="scrollable-details">
+        <h2>Project Overview</h2>
+        <p>
+          <li><strong>Course &amp; Context:</strong> Design a functional walking robot for ME 370: Mechanical Design
+          </li>
+          <li><strong>My Role:</strong> Design the crank-slider dispensing mechanism, leg linkages, and ensure
+            everything works together as a cohesive mechanical system</li>
+          <li><strong>Objectives:</strong> Designing a walking robot that could...
+          <li>Carry at least 5 payloads</li>
+          <li>Walk at a pace of 4m/min or greater without dropping payloads</li>
+          <li>Dispense one payload precisely every 2 meters</li>
+          <li>Do so without the use of traditional wheels with one motor operating continuously at constant speed.</li>
+        </p>
+      </article>
+
+      <article class="scrollable-details">
+        <h2>Dispenser Mechanism Design</h2>
+        <p>
+          The robot's dispensing function relies on a custom <strong>slider-crank dispenser mechanism</strong>
+          coordinated with a compound spur gear train. The slider acts as a carriage for a single candy, moving between
+          two positions. At one position, candy drops in from above, where it is then pushed above a hole for the candy
+          to drop it. An
+          <strong>anti-jam spring-loaded door</strong> ensures reliable dispensing without stalled motors. All motion is
+          powered by a
+          single motor; the spur gear train links the walking leg speed to the dispenser crank timing, guaranteeing
+          exactly one candy is dropped every 2 meters of forward travel.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="crank_slider.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Slider-crank dispenser mechanism.</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Puzzle Piece Chassis Assembly</h2>
+        <p>
+          To maintain structural rigidity and allow for precise alignment, the main chassis was designed using a unique
+          <strong>puzzle piece</strong> construction method. The structural plates were laser-cut from acrylic with
+          interlocking tabs. These plates were securely fastened together using <strong>custom 3D printed
+            brackets</strong>
+          fitted with
+          <strong>brass heat-set inserts</strong>. This combination of laser-cut puzzle tabs and threaded inserts
+          provided an extremely
+          strong, easily assembled framework that could withstand the dynamic stresses of the walking motion.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <!-- Removed 'controls' attribute to enforce muting -->
+        <video autoplay loop muted playsinline>
+          <source src="cad_assembly.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">CAD Assembly showing components connecting together.</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Leg Linkage Synthesis</h2>
+        <p>
+          Rather than relying on known walking patterns like the Chebyshev, Lambda, or Strandbeest mechanisms, we
+          experimented in <strong>Planar Mechanism Kinematic Simulator (PMKS)</strong> to synthesize a custom
+          crank-rocker
+          linkage with a foot path that fit our liking. This allowed us to specifically define a coupler path that
+          featured a nearly flat bottom portion
+          of the cycle, maximizing stable ground contact and ensuring optimal clearance during the return phase.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="PMKS.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">PMKS Linkage Analysis</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Walking & Dispensing Performance</h2>
+        <p>
+          The chosen 6-legged design organizes the legs into two groups of three, operating 180 degrees out of phase
+          with each other. This setup guarantees that three legs (forming a <strong>stable triangular contact
+            patch</strong> directly under the robot's center of mass) are always in contact with the floor. During
+          physical testing, the robot walked steadily at approximately 6m/min, successfully dispensing the Starburst
+          payloads at intervals averaging 1.95m.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <!-- Removed 'controls' attribute to enforce muting -->
+        <video autoplay loop muted playsinline>
+          <source src="2m_dispensing.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Walker traveling across the floor and dispensing a payload every 2 meters.</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Testing & Troubleshooting</h2>
+        <p>
+          Initially, the robot exhibited a consistent "limp" and gradually veered off its intended straight path.
+          Slow-motion analysis revealed that the leg joints were slipping slightly out of phase over time. This was
+          caused by the set screws on the drive shafts not fully penetrating the heat sets, leading to loose joints.
+          After redesigning the joints and implementing longer screws to secure the crank phasing, the unwanted turning
+          behavior was eliminated.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="slomo_out_of_phase.mov" type="video/quicktime">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Slo-Mo video showing legs slightly out of phase.</p>
+      </div>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="turning_off_course.mp4" type="video/quicktime">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Top view showing the robot turning off course due to phase alignment issues.</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Final Theme & Integration</h2>
+        <p>
+          To add a creative touch, the chassis was hand-painted to look like an octopus, with the six complex walking
+          linkages visually representing crawling tentacles with two more tentacles painted onto the chassis. The main
+          gear train was enclosed securely within the
+          chassis, keeping the attention drawn to the smooth mechanical crawling motion.
+        </p>
+      </article>
+
+      <div class="media-container">
+        <!-- Removed 'controls' attribute to enforce muting -->
+        <video autoplay loop muted playsinline>
+          <source src="slomo_painted.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Final painted design walking in perfect synchronization.</p>
+      </div>
+
+      <article class="scrollable-details">
+        <h2>Outcome</h2>
+        <p>
+          The final project was a huge success. The team met all structural, dimensional, and performance requirements,
+          delivering a fully functional, reliable walking robot that dispensed candy on a strict mechanical timer. The
+          iterative design process provided a fantastic hands-on experience in dealing with dynamic friction, linkage
+          synthesis, and the realities of physical assembly tolerances. One of our final deliverables was
+          a lighthearted team video showcasing our design process, so we got a little goofy with and made a parody of
+          Temu ads we'd seen online. Enjoy :)
+        </p>
+      </article>
+
+      <div class="media-container">
+        <video autoplay loop muted playsinline controls>
+          <source src="final_pres.mov" type="video/quicktime">
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">Final Lighthearted Team Presentation</p>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: Collaborators -->
+    <aside class="sidebar-right">
+      <h3>Collaborators</h3>
+      <div class="collaborators-list">
+        <!-- Collab 2: Christopher Egly -->
+        <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank" class="collaborator-card"
+          aria-label="Christopher Egly's LinkedIn Profile">
+          <span class="collab-name">Christopher Egly</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+        <!-- Collab 4: Phoebe Mihevc -->
+        <a href="https://www.linkedin.com/in/pjmihevc/" target="_blank" class="collaborator-card"
+          aria-label="Phoebe Mihevc's LinkedIn Profile">
+          <span class="collab-name">Phoebe Mihevc</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+        <a href="https://www.linkedin.com/in/roger-carstens/" target="_blank" class="collaborator-card"
+          aria-label="Roger Carstens' LinkedIn Profile">
+          <span class="collab-name">Roger Carstens</span>
+          <img src="../../images/linkedin-logo.png" alt="LinkedIn Logo" class="linkedin-icon" />
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- IMAGE LIGHTBOX MODAL -->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content-wrapper">
+      <img class="lightbox-content" id="lightbox-img" src="" alt="Expanded Image" />
+    </div>
+    <div class="lightbox-controls">
+      <button id="zoom-in-btn" title="Zoom In">➕</button>
+      <button id="zoom-out-btn" title="Zoom Out">➖</button>
+      <button id="reset-btn" title="Reset Zoom">🔄</button>
+    </div>
+  </div>
+
+  <script>
+    const toggleSwitch = document.querySelector('#checkbox');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    const localTheme = localStorage.getItem('theme');
+
+    let activeTheme = 'dark';
+    if (urlTheme === 'light' || urlTheme === 'dark') {
+      activeTheme = urlTheme;
+    } else if (localTheme === 'light' || localTheme === 'dark') {
+      activeTheme = localTheme;
+    }
+
+    const isLight = (activeTheme === 'light');
+    document.body.classList.toggle('light-mode', isLight);
+    toggleSwitch.checked = isLight;
+
+    function syncLinks(theme) {
+      document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+          const parts = href.split('?');
+          const basePath = parts[0];
+          const searchParams = new URLSearchParams(parts[1] || '');
+          searchParams.set('theme', theme);
+          link.setAttribute('href', basePath + '?' + searchParams.toString());
+        }
+      });
+    }
+
+    syncLinks(activeTheme);
+
+    toggleSwitch.addEventListener('change', (e) => {
+      const nextLight = e.target.checked;
+      const theme = nextLight ? 'light' : 'dark';
+
+      document.body.classList.toggle('light-mode', nextLight);
+      localStorage.setItem('theme', theme);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+
+      syncLinks(theme);
+    });
+
+    // Lightbox Functionality
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const wrapper = document.querySelector('.lightbox-content-wrapper');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    let zoomScale = 1;
+    let isPanning = false;
+    let startX = 0, startY = 0;
+    let translateX = 0, translateY = 0;
+
+    // Attach click listener to all page images (except icons / sidebar links)
+    document.querySelectorAll('.project-content img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightboxModal.style.display = 'flex';
+        resetLightbox();
+      });
+    });
+
+    function resetLightbox() {
+      zoomScale = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+    }
+
+    function updateTransform() {
+      lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomScale})`;
+    }
+
+    // Close Modal
+    lightboxClose.addEventListener('click', closeModal);
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal || e.target === wrapper) {
+        closeModal();
+      }
+    });
+
+    // Close on outer touch for mobile
+    lightboxModal.addEventListener('touchstart', (e) => {
+      if (e.target === lightboxModal) {
+        closeModal();
+      }
+    });
+
+    function closeModal() {
+      lightboxModal.style.display = 'none';
+    }
+
+    // Escape Key Close
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Zoom Buttons
+    zoomInBtn.addEventListener('click', () => {
+      zoomScale = Math.min(zoomScale + 0.25, 4);
+      updateTransform();
+    });
+
+    zoomOutBtn.addEventListener('click', () => {
+      zoomScale = Math.max(zoomScale - 0.25, 0.5);
+      updateTransform();
+    });
+
+    resetBtn.addEventListener('click', resetLightbox);
+
+    // Mouse Wheel Zoom
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = 0.1;
+      if (e.deltaY < 0) {
+        zoomScale = Math.min(zoomScale + zoomFactor, 4);
+      } else {
+        zoomScale = Math.max(zoomScale - zoomFactor, 0.5);
+      }
+      updateTransform();
+    });
+
+    // Panning Functionality
+    wrapper.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+    });
+
+    // Touch support for mobile panning and pinch-to-zoom
+    let initialTouchDist = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isPanning = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      } else if (e.touches.length === 2) {
+        isPanning = false;
+        initialTouchDist = getTouchDist(e);
+      }
+    });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (isPanning && e.touches.length === 1) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        updateTransform();
+      } else if (e.touches.length === 2) {
+        const dist = getTouchDist(e);
+        const factor = dist / initialTouchDist;
+        zoomScale = Math.max(0.5, Math.min(4, zoomScale * factor));
+        initialTouchDist = dist;
+        updateTransform();
+      }
+    });
+
+    wrapper.addEventListener('touchend', () => {
+      isPanning = false;
+    });
+
+    function getTouchDist(e) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+  </script>
+
+</body>
+
+</html>
