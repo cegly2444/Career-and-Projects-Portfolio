@@ -355,15 +355,26 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(6px);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, visibility 0.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
       z-index: 1000;
       white-space: nowrap;
+    }
+
+    /* Invisible hover bridge to prevent accidental pointer drop */
+    .email-popup-box::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 100%;
+      height: 10px;
     }
 
     .email-btn-wrapper:hover .email-popup-box {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+      transition-delay: 0s;
     }
 
     .email-popup-text {
