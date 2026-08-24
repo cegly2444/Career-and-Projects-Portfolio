@@ -1,20 +1,9 @@
-# # Large video backdrops and heavy assets exceeding GitHub limits
-# videos/
-# images/experience/NMBL_TitleCard.MP4
 # Ignore uncompressed/full-quality backup videos > 100MB
 *FULLQUALITY*
 *fullquality*
 *_backup*
 *_BACKUP*
 
-# # Large raw CAD / mesh / video archives
-# *.step
-# *.STEP
-# *.stl
-# *.STL
-# projects/*/unused/
-# projects/*/*.MOV
-# projects/*/*.mov
 # Large raw CAD / mesh / unused video archives
 *.step
 *.STEP
@@ -22,11 +11,6 @@
 *.STL
 projects/*/unused/
 
-# # OS / Editor temporary files
-# .DS_Store
-# Thumbs.db
-# .vscode/
-# .idea/
 # OS / Editor temporary files
 .DS_Store
 Thumbs.db
