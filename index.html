@@ -305,12 +305,13 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
     }
 
     .hero-email-link:hover {
       background-color: #c95b5b;
       border-color: #300c0c;
+      transform: translateY(-1px);
     }
 
     .hero-email-link svg {
@@ -328,6 +329,7 @@
     body.light-mode .hero-email-link:hover {
       background-color: #d16262;
       border-color: #3b1010;
+      transform: translateY(-1px);
     }
 
     /* Email Hover Dropdown Box */
@@ -425,11 +427,13 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
     }
 
     .linkedin-link:hover {
-      opacity: 0.9;
+      opacity: 0.95;
+      background-color: #006097;
+      transform: translateY(-1px);
     }
 
     .linkedin-link svg {
@@ -449,12 +453,13 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: background-color 0.2s, color 0.2s;
+      transition: background-color 0.2s, color 0.2s, transform 0.2s;
     }
 
     .hero-resume-link:hover {
       background-color: #cde4c4 !important;
       color: #10170e !important;
+      transform: translateY(-1px);
     }
 
     /* Publication Button - Solid Pale Yellow */
