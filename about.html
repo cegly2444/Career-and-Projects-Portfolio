@@ -207,23 +207,19 @@
       transition: color 0.3s ease;
     }
 
-    /* --- COLLAGE SCRAPBOOK STYLE (STAGGERED 2-COLUMN) --- */
+    /* --- COLLAGE SCRAPBOOK STYLE (2-COLUMN MASONRY) --- */
     .collage-grid {
-      display: flex;
-      gap: 1.25rem;
+      column-count: 2;
+      column-gap: 1.25rem;
       max-width: 900px;
       width: 100%;
     }
 
-    .collage-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
     .collage-card {
+      break-inside: avoid;
+      display: block;
       width: 100%;
+      margin-bottom: 1.25rem;
       border-radius: 12px;
       overflow: hidden;
       border: 3px solid var(--surface-bg);
@@ -307,7 +303,7 @@
 
     @media (max-width: 600px) {
       .collage-grid {
-        flex-direction: column;
+        column-count: 1;
       }
     }
 
@@ -479,32 +475,41 @@
 
     </div>
 
-    <!-- RIGHT SIDE: Collage Column -->
+    <!-- RIGHT SIDE: Collage Column (2-Column Masonry) -->
     <div class="collage-grid">
-      <div class="collage-card item-1">
+      <!-- Column 1 (Left): Ocean Pose, Grand Canyon, Jazz, Peach Cheesecake -->
+      <div class="collage-card item-1" onclick="openLightbox('images/About_Me_Ocean_Pose.jpg')">
         <img src="images/About_Me_Ocean_Pose.jpg" alt="Christopher by the ocean" />
       </div>
-      <div class="collage-card item-2">
+      <div class="collage-card item-2" onclick="openLightbox('images/About_Me_Grand_Canyon.jpg')">
         <img src="images/About_Me_Grand_Canyon.jpg" alt="Christopher at the Grand Canyon" />
       </div>
-      <div class="collage-card item-3">
+      <div class="collage-card item-3" onclick="openLightbox('images/About_Me_Jazz.jpg')">
         <img src="images/About_Me_Jazz.jpg" alt="Christopher playing jazz music" />
       </div>
-      <div class="collage-card item-4">
+      <div class="collage-card item-7" onclick="openLightbox('images/peach%20cheesecake.jpg')">
+        <img src="images/peach%20cheesecake.jpg" alt="Homemade Peach Cheesecake" />
+      </div>
+
+      <!-- Column 2 (Right): Football Game, Moments 1, Moments 2 (Climbing) -->
+      <div class="collage-card item-4" onclick="openLightbox('images/About_Me_Football_Game.jpg')">
         <img src="images/About_Me_Football_Game.jpg" alt="Christopher at the football game" />
       </div>
-      <div class="collage-card item-5">
+      <div class="collage-card item-5" onclick="openLightbox('images/About_Me_1.jpg')">
         <img src="images/About_Me_1.jpg" alt="Christopher personal moments" />
       </div>
-      <div class="collage-card item-6">
+      <div class="collage-card item-6" onclick="openLightbox('images/About_Me_2.jpg')">
         <img src="images/About_Me_2.jpg" alt="Christopher exploring activities" />
-      </div>
-      <div class="collage-card item-7">
-        <img src="images/peach%20cheesecake.jpg" alt="Homemade Peach Cheesecake" />
       </div>
     </div>
 
   </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImg" class="lightbox-img" src="" alt="Enlarged view" />
+  </div>
 
   <!-- SITE FOOTER -->
   
