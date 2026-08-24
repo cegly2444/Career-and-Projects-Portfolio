@@ -6,6 +6,13 @@
   <title>Redirecting to Stryker...</title>
   <script>
     window.location.replace("Stryker/stryker.html");
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 </head>
 <body style="background-color: #10170e; color: #ffffff; font-family: sans-serif; text-align: center; padding: 3rem;">

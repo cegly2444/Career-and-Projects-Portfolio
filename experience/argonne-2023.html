@@ -6,6 +6,13 @@
   <title>Redirecting to Argonne National Lab (2023)...</title>
   <script>
     window.location.replace("Argonne%20Summer%201/argonne-2023.html");
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 </head>
 <body style="background-color: #10170e; color: #ffffff; font-family: sans-serif; text-align: center; padding: 3rem;">

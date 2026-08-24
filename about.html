@@ -340,6 +340,13 @@
         localStorage.setItem('theme', theme);
       });
     }
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 
 </body>

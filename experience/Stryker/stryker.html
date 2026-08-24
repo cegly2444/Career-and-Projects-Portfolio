@@ -506,7 +506,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -586,27 +586,21 @@
         <div class="gallery-grid">
         <div class="media-container">
           <img src="PXL_20250708_164809193.jpg" alt="Engineering test bench and tooling assembly setup." onclick="openLightbox('PXL_20250708_164809193.jpg')" />
-          <p class="media-caption">Engineering test bench and tooling assembly setup.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20250708_165451766.jpg" alt="Component harvesting fixture and verification tooling." onclick="openLightbox('PXL_20250708_165451766.jpg')" />
-          <p class="media-caption">Component harvesting fixture and verification tooling.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20250708_170436263.jpg" alt="Production line testing hardware and electrical diagnostic fixtures." onclick="openLightbox('PXL_20250708_170436263.jpg')" />
-          <p class="media-caption">Production line testing hardware and electrical diagnostic fixtures.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20250716_155121074.jpg" alt="Medical device cable reprocessing and catheter fixture validation." onclick="openLightbox('PXL_20250716_155121074.jpg')" />
-          <p class="media-caption">Medical device cable reprocessing and catheter fixture validation.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20250716_171024623.jpg" alt="Cleanroom process optimization and assembly line test station." onclick="openLightbox('PXL_20250716_171024623.jpg')" />
-          <p class="media-caption">Cleanroom process optimization and assembly line test station.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20250724_205015378.jpg" alt="Custom PCB and automated connector testing interface." onclick="openLightbox('PXL_20250724_205015378.jpg')" />
-          <p class="media-caption">Custom PCB and automated connector testing interface.</p>
         </div>
         </div>
       </article>
@@ -648,6 +642,13 @@
         document.body.classList.toggle('light-mode', nextLight);
         localStorage.setItem('theme', theme);
       });
+    }
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
     }
   </script>
 </body>

@@ -897,6 +897,32 @@
         });
       }
     });
+    // --- SCROLL POSITION RESTORATION ---
+    const saveScroll = () => {
+      sessionStorage.setItem('portfolio_scroll_pos', window.scrollY);
+    };
+    window.addEventListener('scroll', saveScroll, { passive: true });
+    window.addEventListener('beforeunload', saveScroll);
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', saveScroll);
+    });
+
+    const restoreScroll = () => {
+      const savedScroll = sessionStorage.getItem('portfolio_scroll_pos');
+      if (savedScroll !== null) {
+        window.scrollTo({
+          top: parseInt(savedScroll, 10),
+          behavior: 'instant'
+        });
+      }
+    };
+    if (document.readyState === 'complete') {
+      restoreScroll();
+    } else {
+      window.addEventListener('load', restoreScroll);
+      // Double check after layout paint
+      setTimeout(restoreScroll, 50);
+    }
   </script>
 
 </body>

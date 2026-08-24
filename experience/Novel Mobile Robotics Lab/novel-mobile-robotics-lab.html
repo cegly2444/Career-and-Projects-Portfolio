@@ -529,7 +529,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -579,11 +579,13 @@
 
       <div class="sidebar-section" style="margin-top: 1.5rem;">
         <h3>Key Skills &amp; Tools</h3>
-        <div class="skills-container">
+                <div class="skills-container">
           <span class="skill-badge">Mobile Robotics</span>
           <span class="skill-badge">Controls &amp; Dynamics</span>
           <span class="skill-badge">C++ / Python</span>
-          <span class="skill-badge">ROS / ROS2</span>
+          <span class="skill-badge">CAD (Siemens NX)</span>
+          <span class="skill-badge">Geometry Optimization</span>
+          <span class="skill-badge">Test Engineering</span>
           <span class="skill-badge">Embedded Electronics</span>
           <span class="skill-badge">Sensor Fusion</span>
           <span class="skill-badge">Kinematics</span>
@@ -595,15 +597,28 @@
     <!-- CENTER: Main Content -->
     <section class="project-content">
 
-      <!-- Executive Overview / Resume Points -->
+            <!-- Executive Overview / Resume Points -->
       <article class="scrollable-details">
         <h2>Key Responsibilities &amp; Highlights</h2>
         <p>Refactored and merged code base from C to C++ oriented design, compile speed reduced to negligible level.</p>
         <p>Tested hopping, rolling, and balancing capabilities at the SLOPE lab, NASA GLENN in Ohio.</p>
-        <p>Synthesized multi-DOF physical prototype chassis integrating brushless direct-drive actuators, custom motor drivers, high-speed IMUs, and optical encoders for agile bio-inspired mobile locomotion.</p>
+        <p>Completed design and testing of 6 low-weight foot designs for LEAP platform to balance on. Integrated custom Universal joint to improve balancing.</p>
       </article>
 
-
+      <!-- Experience Photo Gallery -->
+      <article class="scrollable-details">
+        <h2>Hardware &amp; Mechanism Documentation</h2>
+        <div class="gallery-grid">
+          <div class="media-container">
+            <img src="Universal%20Joint.png" alt="Universal Joint" onclick="openLightbox('Universal Joint.png')" />
+            <p class="media-caption">Universal Joint</p>
+          </div>
+          <div class="media-container">
+            <img src="Centering%20Force.png" alt="Centering Force Example" onclick="openLightbox('Centering Force.png')" />
+            <p class="media-caption">Centering Force Example</p>
+          </div>
+        </div>
+      </article>
 
     </section>
 
@@ -616,7 +631,7 @@
       </div>
       <div class="sidebar-card">
         <div class="sidebar-card-title">Status</div>
-        <div class="sidebar-card-value">Past Role</div>
+        <div class="sidebar-card-value">Role paused while at SpaceX</div>
       </div>
     </aside>
 
@@ -642,6 +657,30 @@
         document.body.classList.toggle('light-mode', nextLight);
         localStorage.setItem('theme', theme);
       });
+    }
+
+    // Lightbox functions
+    function openLightbox(src) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
     }
   </script>
 </body>

@@ -6,6 +6,13 @@
   <title>Redirecting to Novel Mobile Robotics Lab...</title>
   <script>
     window.location.replace("Novel%20Mobile%20Robotics%20Lab/novel-mobile-robotics-lab.html");
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 </head>
 <body style="background-color: #10170e; color: #ffffff; font-family: sans-serif; text-align: center; padding: 3rem;">

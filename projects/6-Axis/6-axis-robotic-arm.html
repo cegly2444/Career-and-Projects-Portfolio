@@ -630,7 +630,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -960,6 +960,13 @@
         document.body.classList.toggle('light-mode', nextLight);
         localStorage.setItem('theme', theme);
       });
+    }
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
     }
   </script>
 

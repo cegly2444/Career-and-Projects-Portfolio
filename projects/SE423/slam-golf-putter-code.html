@@ -277,7 +277,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="slam-golf-putter.html" class="back-link">&larr; Back to Project</a>
+    <a href="slam-golf-putter.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Project</a>
     <div class="page-title">Code Viewer</div>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
@@ -1652,6 +1652,13 @@ void setF28027EPWM2A(float controleffort){
     window.addEventListener('DOMContentLoaded', () => {
       switchTab('c');
     });
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 
 </body>

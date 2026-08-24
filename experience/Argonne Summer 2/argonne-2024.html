@@ -435,6 +435,84 @@
       width: 100%;
     }
 
+    /* Publication Alert Box - Pale Yellow Theme */
+    .publication-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background-color: rgba(58, 50, 24, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(234, 198, 93, 0.45);
+      border-left: 4px solid #eac65d;
+      border-radius: 8px;
+      padding: 1.15rem 1.35rem;
+      font-size: 0.95rem;
+      color: #fff6db;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .publication-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #f7d570;
+    }
+
+    .publication-icon {
+      width: 18px;
+      height: 18px;
+      color: #f7d570;
+      flex-shrink: 0;
+    }
+
+    .publication-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #fff6db;
+      margin: 0 !important;
+    }
+
+    .publication-link {
+      display: inline-block;
+      margin-top: 0.4rem;
+      color: #f7d570;
+      font-weight: 600;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+
+    .publication-link:hover {
+      color: #ffffff;
+    }
+
+    body.light-mode .publication-box {
+      background-color: rgba(254, 249, 217, 0.94);
+      border: 1px solid #ebd987;
+      border-left: 4px solid #d4a72c;
+      color: #634a0e;
+      box-shadow: 0 4px 14px rgba(100, 78, 16, 0.12);
+    }
+
+    body.light-mode .publication-header,
+    body.light-mode .publication-icon,
+    body.light-mode .publication-link {
+      color: #b5830b;
+    }
+
+    body.light-mode .publication-content {
+      color: #634a0e;
+    }
+
+    body.light-mode .publication-link:hover {
+      color: #3b2a00;
+    }
+
     /* Lightbox Modal */
     .lightbox-modal {
       display: none;
@@ -506,7 +584,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -556,15 +634,15 @@
 
       <div class="sidebar-section" style="margin-top: 1.5rem;">
         <h3>Key Skills &amp; Tools</h3>
-        <div class="skills-container">
+                <div class="skills-container">
           <span class="skill-badge">Scientific Instrumentation</span>
-          <span class="skill-badge">Finite Element Analysis (FEA)</span>
           <span class="skill-badge">Machine Learning / NNs</span>
+          <span class="skill-badge">Control Systems</span>
+          <span class="skill-badge">Data Engineering</span>
+          <span class="skill-badge">Scientific Communication</span>
           <span class="skill-badge">Piezoelectric Mirrors</span>
           <span class="skill-badge">Vacuum &amp; Cryogenics</span>
           <span class="skill-badge">Optics</span>
-          <span class="skill-badge">LabVIEW</span>
-          <span class="skill-badge">GD&amp;T</span>
         </div>
       </div>
     </aside>
@@ -577,8 +655,22 @@
         <h2>Key Responsibilities &amp; Highlights</h2>
         <p>Developed and tested a closed loop, machine learning driven control system for a piezoelectric x-ray bimorph mirror by combining two NNs in series to predict future mirror profiles and adjustments.</p>
         <p>Improved mirror surface accuracy by 30% to less than 1.32 nanometers RMS and added key stabilization technique restraining mirror creep by 67% to within 0.081 nanometers RMS by utilizing tandem neural network techniques.</p>
-        <p>Resultant publication: R. Zhang, L. Rebuffi, C. Egly, et al., "Tandem neural network-based controller for x-ray bimorph mirrors", <em>Optics Letters</em> 50, 10 (2025). DOI: 10.1364/OL.559583</p>
       </article>
+
+      <!-- Publication Alert Box -->
+      <div class="publication-box">
+        <div class="publication-header">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="publication-icon">
+            <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
+          </svg>
+          <span>Publication</span>
+        </div>
+        <p class="publication-content">
+          R. Zhang, L. Rebuffi, <strong>C. Egly</strong>, et al., "Tandem neural network-based controller for x-ray bimorph mirrors", <em>Optics Letters</em> 50, 10 (2025).
+          <br>
+          <a href="https://doi.org/10.1364/OL.559583" target="_blank" class="publication-link">DOI: 10.1364/OL.559583 &rarr;</a>
+        </p>
+      </div>
 
       <!-- Experience Photo Gallery -->
       <article class="scrollable-details">
@@ -586,11 +678,9 @@
         <div class="gallery-grid">
         <div class="media-container">
           <img src="PXL_20230803_174134239.jpg" alt="High-energy scientific instrumentation and beamline apparatus." onclick="openLightbox('PXL_20230803_174134239.jpg')" />
-          <p class="media-caption">High-energy scientific instrumentation and beamline apparatus.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20240705_214307474.jpg" alt="Piezoelectric bimorph mirror test bench and precision optical measurement setup." onclick="openLightbox('PXL_20240705_214307474.jpg')" />
-          <p class="media-caption">Piezoelectric bimorph mirror test bench and precision optical measurement setup.</p>
         </div>
         </div>
       </article>
@@ -632,6 +722,13 @@
         document.body.classList.toggle('light-mode', nextLight);
         localStorage.setItem('theme', theme);
       });
+    }
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
     }
   </script>
 </body>

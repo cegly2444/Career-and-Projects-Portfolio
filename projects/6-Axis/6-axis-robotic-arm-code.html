@@ -277,7 +277,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="6-axis-robotic-arm.html" class="back-link">&larr; Back to Project</a>
+    <a href="6-axis-robotic-arm.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Project</a>
     <div class="page-title">Code Viewer</div>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
@@ -1205,6 +1205,13 @@ plt.show()</script>
         switchTab('arduino');
       }
     });
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 
 </body>

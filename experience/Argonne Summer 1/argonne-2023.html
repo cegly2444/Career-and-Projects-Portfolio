@@ -506,7 +506,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -556,11 +556,9 @@
 
       <div class="sidebar-section" style="margin-top: 1.5rem;">
         <h3>Key Skills &amp; Tools</h3>
-        <div class="skills-container">
-          <span class="skill-badge">CAD Modeling (AutoCAD/Inventor)</span>
+                <div class="skills-container">
+          <span class="skill-badge">CAD (PTC Creo Parametric)</span>
           <span class="skill-badge">Prototyping</span>
-          <span class="skill-badge">Machining &amp; Shop Tools</span>
-          <span class="skill-badge">Thermal Design</span>
           <span class="skill-badge">Sensor Setup</span>
           <span class="skill-badge">Technical Documentation</span>
           <span class="skill-badge">Lab Safety &amp; Standards</span>
@@ -571,13 +569,11 @@
     <!-- CENTER: Main Content -->
     <section class="project-content">
 
-      <!-- Executive Overview / Resume Points -->
+            <!-- Executive Overview / Resume Points -->
       <article class="scrollable-details">
         <h2>Key Responsibilities &amp; Highlights</h2>
-        <p>Designed detailed 3D CAD parts, mounting brackets, and 2D engineering drawings for experimental test rigs and auxiliary mechanical laboratory systems.</p>
-        <p>Fabricated precision prototype components utilizing machine shop tooling (mills, lathes, band saws) and rapid 3D printing with tight turnaround times.</p>
-        <p>Assembled sensorized test benches equipped with thermocouples, load cells, and flowmeters to validate thermal dissipation and mechanical endurance under continuous operation.</p>
-        <p>Documented test criteria, standard operating procedures, and safety compliance protocols adhering to Department of Energy and Argonne facility standards.</p>
+        <p>Built, tested and installed a laboratory cleanroom monitoring device which monitored particulate matter, humidity, and temperature. <a href="https://docs.google.com/presentation/d/1K0K5Dirv2SmS7JBllO1qP6fYBHM-SM1-eBxV4vN2ifY/edit?usp=sharing" target="_blank" style="color: var(--primary-color); text-decoration: underline;">Link to finished project</a></p>
+        <p>Documented manufacturing and assembly process to reproduce the device for use in multiple laboratories, expanding the impact on laboratory monitoring at Argonne.</p>
       </article>
 
       <!-- Experience Photo Gallery -->
@@ -586,11 +582,9 @@
         <div class="gallery-grid">
         <div class="media-container">
           <img src="PXL_20230619_185624059.jpg" alt="Experimental laboratory hardware and mechanical test assembly." onclick="openLightbox('PXL_20230619_185624059.jpg')" />
-          <p class="media-caption">Experimental laboratory hardware and mechanical test assembly.</p>
         </div>
         <div class="media-container">
           <img src="PXL_20230622_162027033.jpg" alt="Precision machined prototype components and experimental test rig." onclick="openLightbox('PXL_20230622_162027033.jpg')" />
-          <p class="media-caption">Precision machined prototype components and experimental test rig.</p>
         </div>
         </div>
       </article>
@@ -632,6 +626,13 @@
         document.body.classList.toggle('light-mode', nextLight);
         localStorage.setItem('theme', theme);
       });
+    }
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
     }
   </script>
 </body>

@@ -544,7 +544,7 @@
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -594,15 +594,19 @@
 
       <div class="sidebar-section" style="margin-top: 1.5rem;">
         <h3>Key Skills &amp; Tools</h3>
-        <div class="skills-container">
-          <span class="skill-badge">Space Robotics</span>
-          <span class="skill-badge">CAD (SolidWorks/NX)</span>
+                <div class="skills-container">
+          <span class="skill-badge">Autodesk Inventor</span>
+          <span class="skill-badge">Test Requirement Synthesis</span>
+          <span class="skill-badge">Project Planning</span>
+          <span class="skill-badge">First Principles Hand Calculations</span>
+          <span class="skill-badge">Flight Hardware Handling and Assembly</span>
+          <span class="skill-badge">Test Engineering</span>
+          <span class="skill-badge">Communication with Vendors</span>
           <span class="skill-badge">Mechanism Synthesis</span>
           <span class="skill-badge">FEA Analysis</span>
           <span class="skill-badge">Extreme-Environment Actuation</span>
           <span class="skill-badge">Thermal Modeling</span>
           <span class="skill-badge">Prototyping</span>
-          <span class="skill-badge">Planetary Tooling</span>
         </div>
       </div>
     </aside>
@@ -703,6 +707,13 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
     });
+    // Back to portfolio with scroll preservation
+    function handleBackToPortfolio(e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    }
   </script>
 </body>
 
