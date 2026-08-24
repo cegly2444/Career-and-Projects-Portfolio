@@ -1,21 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0; url=HoneyBee%20Robotics/honeybee-robotics.html">
   <title>Redirecting to HoneyBee Robotics...</title>
+
   <script>
     window.location.replace("HoneyBee%20Robotics/honeybee-robotics.html");
-    // Back to portfolio with scroll preservation
-    function handleBackToPortfolio(e) {
-      if (window.history.length > 1) {
-        e.preventDefault();
-        window.history.back();
-      }
     }
+
+    // Keyboard Arrow Navigation (← / →)
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') {
+        const prevLink = document.querySelector('.nav-arrow-prev');
+        if (prevLink && prevLink.href) {
+          window.location.href = prevLink.href;
+        }
+      } else if (e.key === 'ArrowRight') {
+        const nextLink = document.querySelector('.nav-arrow-next');
+        if (nextLink && nextLink.href) {
+          window.location.href = nextLink.href;
+        }
+      }
+    });
+
+    // 1-Click Email Copy with Toast Feedback
+    function copyEmail(e) {
+      const email = "cegly2444@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('copyToast');
+        if (toast) {
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+          }, 2600);
+        }
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+
+    // Show Keyboard Navigation Hint only when arriving from homepage
+    window.addEventListener('DOMContentLoaded', () => {
+      const fromHome = sessionStorage.getItem('from_homepage') === 'true' || 
+                       (document.referrer && (document.referrer.endsWith('index.html') || document.referrer.endsWith('/')));
+      if (fromHome) {
+        sessionStorage.removeItem('from_homepage');
+        const hint = document.getElementById('navKeyHint');
+        if (hint) {
+          setTimeout(() => {
+            hint.classList.add('show');
+            setTimeout(() => {
+              hint.classList.remove('show');
+            }, 3800);
+          }, 450);
+        }
+      }
+    });
   </script>
 </head>
 <body style="background-color: #10170e; color: #ffffff; font-family: sans-serif; text-align: center; padding: 3rem;">
+
+  <!-- Top-Right Keyboard Navigation Hint -->
+  <div id="navKeyHint" class="nav-key-hint">
+    <span>💡 Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> keys to navigate</span>
+  </div>
+
   <p>Redirecting to <a href="HoneyBee%20Robotics/honeybee-robotics.html" style="color: #b6d7a8;">HoneyBee Robotics</a>...</p>
+
+  <!-- SITE FOOTER -->
+  
+  <!-- Toast Notification for Email Copy -->
+  <div id="copyToast" class="toast-notification">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="toast-icon">
+      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.74-5.25Z" clip-rule="evenodd" />
+    </svg>
+    <span>Copied <strong>cegly2444@gmail.com</strong> to clipboard!</span>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Christopher Egly &bull; BS Mechanical Engineering</p>
+      <div class="footer-links">
+        <a href="#home">Back to Top &uarr;</a>
+        <span class="footer-dot">&bull;</span>
+        <a href="mailto:cegly2444@gmail.com" onclick="copyEmail(event)">cegly2444@gmail.com</a>
+        <span class="footer-dot">&bull;</span>
+        <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>

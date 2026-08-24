@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Rounded Navy Background -->
+  <rect width="64" height="64" rx="14" fill="#13294B"/>
+  
+  <!-- Outer White Border for Block I -->
+  <path d="M16 11 H48 V23 H40 V41 H48 V53 H16 V41 H24 V23 H16 Z" 
+        fill="#FFFFFF" />
+        
+  <!-- Inner Illini Orange Block I -->
+  <path d="M19 14 H45 V20 H37 V44 H45 V50 H19 V44 H27 V20 H19 Z" 
+        fill="#FF5F05" />
+</svg>

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Argonne National Lab - Mechanical Engineering Intern (DOE SULI 2024)</title>
@@ -576,15 +577,300 @@
         text-align: center;
       }
     }
+
+    /* --- SITE FOOTER --- */
+    .site-footer {
+      border-top: 1px solid var(--border-color);
+      background-color: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 2rem 1.5rem;
+      margin-top: 4rem;
+      width: 100%;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .footer-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    .footer-dot {
+      color: var(--border-color);
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+      }
+    }
+
+    
+    
+    
+    
+    /* Floating Side Navigation Arrows (Snug to window edges) */
+    .nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: rgba(30, 44, 27, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 9999;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .nav-arrow:hover {
+      background-color: var(--primary-color);
+      color: #10170e;
+      border-color: var(--primary-hover);
+      transform: translateY(-50%) scale(1.12);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-arrow-prev {
+      left: 10px;
+    }
+
+    .nav-arrow-next {
+      right: 10px;
+    }
+
+    .nav-arrow svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-arrow-tooltip {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(16, 23, 14, 0.95);
+      color: #ffffff;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-arrow-prev .nav-arrow-tooltip {
+      left: calc(100% + 8px);
+    }
+
+    .nav-arrow-next .nav-arrow-tooltip {
+      right: calc(100% + 8px);
+    }
+
+    .nav-arrow:hover .nav-arrow-tooltip {
+      opacity: 1;
+    }
+
+    body.light-mode .nav-arrow {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-color: #d1e2d9;
+      color: #152d22;
+      box-shadow: 0 4px 14px rgba(18, 48, 34, 0.15);
+    }
+
+    body.light-mode .nav-arrow:hover {
+      background-color: #236c4b;
+      color: #ffffff;
+      border-color: #174e35;
+    }
+
+    body.light-mode .nav-arrow-tooltip {
+      background-color: #ffffff;
+      color: #152d22;
+      border-color: #d1e2d9;
+    }
+
+    @media (max-width: 900px) {
+      .nav-arrow-prev {
+        left: 4px;
+      }
+      .nav-arrow-next {
+        right: 4px;
+      }
+      .nav-arrow {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    /* Copy Email Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: rgba(24, 35, 21, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--primary-color);
+      color: #ffffff;
+      padding: 0.75rem 1.4rem;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+
+    .toast-notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    body.light-mode .toast-notification {
+      background-color: rgba(255, 255, 255, 0.96);
+      border-color: #236c4b;
+      color: #152d22;
+      box-shadow: 0 10px 30px rgba(18, 48, 34, 0.18);
+    }
+
+    body.light-mode .toast-icon {
+      color: #236c4b;
+    }
+
+    /* Top-Right Keyboard Navigation Hint */
+    .nav-key-hint {
+      position: fixed;
+      top: 4.8rem;
+      right: 1.5rem;
+      background-color: rgba(24, 35, 21, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--primary-color);
+      color: #f0f7ee;
+      padding: 0.55rem 1rem;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(-12px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-key-hint.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-key-hint kbd {
+      background-color: rgba(182, 215, 168, 0.18);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 0.15rem 0.45rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    body.light-mode .nav-key-hint {
+      background-color: rgba(255, 255, 255, 0.96);
+      border-color: #236c4b;
+      color: #152d22;
+      box-shadow: 0 8px 25px rgba(18, 48, 34, 0.15);
+    }
+
+    body.light-mode .nav-key-hint kbd {
+      background-color: rgba(35, 108, 75, 0.1);
+      border-color: #236c4b;
+      color: #174e35;
+      box-shadow: 0 1px 3px rgba(18, 48, 34, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .nav-key-hint {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
 <body id="home">
 
+  <!-- Top-Right Keyboard Navigation Hint -->
+  <div id="navKeyHint" class="nav-key-hint">
+    <span>💡 Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> keys to navigate</span>
+  </div>
+
+
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
-    <a href="../../index.html" class="back-link" onclick="handleBackToPortfolio(event)">&larr; Back to Portfolio</a>
+    <a href="../../index.html" class="back-link" >&larr; Back to Portfolio</a>
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -702,13 +988,48 @@
 
   </main>
 
+  
+  <!-- SITE FOOTER -->
+
+  
+  <!-- SIDE NAVIGATION ARROWS -->
+  <a href="../Stryker/stryker.html" class="nav-arrow nav-arrow-prev" title="Previous: Stryker" aria-label="Previous: Stryker">
+    <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
+    <span class="nav-arrow-tooltip">&larr; Stryker</span>
+  </a>
+  <a href="../Argonne%20Summer%201/argonne-2023.html" class="nav-arrow nav-arrow-next" title="Next: Argonne (Summer 2023)" aria-label="Next: Argonne (Summer 2023)">
+    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+    <span class="nav-arrow-tooltip">Argonne (Summer 2023) &rarr;</span>
+  </a>
+  
+  <!-- Toast Notification for Email Copy -->
+  <div id="copyToast" class="toast-notification">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="toast-icon">
+      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.74-5.25Z" clip-rule="evenodd" />
+    </svg>
+    <span>Copied <strong>cegly2444@gmail.com</strong> to clipboard!</span>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Christopher Egly &bull; BS Mechanical Engineering</p>
+      <div class="footer-links">
+        <a href="#home">Back to Top &uarr;</a>
+        <span class="footer-dot">&bull;</span>
+        <a href="mailto:cegly2444@gmail.com" onclick="copyEmail(event)">cegly2444@gmail.com</a>
+        <span class="footer-dot">&bull;</span>
+        <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
   <!-- Lightbox Modal -->
   <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
     <span class="lightbox-close">&times;</span>
     <img id="lightboxImg" class="lightbox-img" src="" alt="Enlarged view" />
   </div>
 
-  <script>
+    <script>
     const toggleSwitch = document.querySelector('#checkbox');
     const localTheme = localStorage.getItem('theme');
     const isLight = (localTheme === 'light');
@@ -723,13 +1044,78 @@
         localStorage.setItem('theme', theme);
       });
     }
-    // Back to portfolio with scroll preservation
-    function handleBackToPortfolio(e) {
-      if (window.history.length > 1) {
-        e.preventDefault();
-        window.history.back();
+
+    // Lightbox functions
+    function openLightbox(src) {
+      const modal = document.getElementById('lightboxModal') || document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightboxImg') || document.getElementById('lightbox-img');
+      if (img && modal) {
+        img.src = src;
+        modal.classList.add('active');
       }
     }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal') || document.getElementById('lightbox-modal');
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+
+    // Keyboard Navigation: Escape for modal, ArrowLeft / ArrowRight for subpages
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
+      if (e.key === 'ArrowLeft' || e.keyCode === 37) {
+        const prevLink = document.querySelector('.nav-arrow-prev');
+        if (prevLink && prevLink.getAttribute('href')) {
+          window.location.href = prevLink.getAttribute('href');
+        }
+      } else if (e.key === 'ArrowRight' || e.keyCode === 39) {
+        const nextLink = document.querySelector('.nav-arrow-next');
+        if (nextLink && nextLink.getAttribute('href')) {
+          window.location.href = nextLink.getAttribute('href');
+        }
+      }
+    });
+
+    // 1-Click Email Copy with Toast Feedback
+    function copyEmail(e) {
+      const email = "cegly2444@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('copyToast');
+        if (toast) {
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+          }, 2600);
+        }
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+
+    // Show Keyboard Navigation Hint only when arriving from homepage
+    window.addEventListener('DOMContentLoaded', () => {
+      const fromHome = sessionStorage.getItem('from_homepage') === 'true' || 
+                       (document.referrer && (document.referrer.endsWith('index.html') || document.referrer.endsWith('/')));
+      if (fromHome) {
+        sessionStorage.removeItem('from_homepage');
+        const hint = document.getElementById('navKeyHint');
+        if (hint) {
+          setTimeout(() => {
+            hint.classList.add('show');
+            setTimeout(() => {
+              hint.classList.remove('show');
+            }, 3800);
+          }, 450);
+        }
+      }
+    });
   </script>
 </body>
 
