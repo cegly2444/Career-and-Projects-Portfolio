@@ -4,34 +4,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Me - Neil Maushard</title>
+  <title>About Me - FIX_NAME</title>
   <style>
     :root {
-      /* Default: Night Mode */
-      --bg-color: #0f172a;
-      --surface-bg: #1e293b;
-      --navbar-bg: #0f172a;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --border-color: #334155;
-      --primary-color: #60a5fa;
-      --primary-hover: #3b82f6;
-      --card-hover-shadow: rgba(0, 0, 0, 0.4);
-      --img-bg: #1e293b;
+      /* Default: Night Mode - Muted Sage/Pine Theme derived from #b6d7a8 */
+      --bg-color: #10170e;
+      --bg-gradient: linear-gradient(180deg, #364a2f 0%, #253521 25%, #182315 60%, #10170e 100%);
+      --surface-bg: #293824;
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #ffffff;
+      --text-secondary: #f0f7ee;
+      --border-color: #3e5436;
+      --primary-color: #b6d7a8;
+      --primary-hover: #cde4c4;
+      --card-hover-shadow: rgba(0, 0, 0, 0.45);
+      --img-bg: #293824;
     }
 
     body.light-mode {
-      /* Overrides for Light Mode */
-      --bg-color: #f7fafc;
+      /* Overrides for Light Mode - Pine Green */
+      --bg-color: #f4f8f5;
+      --bg-gradient: linear-gradient(180deg, #e2eee5 0%, #edf5f0 35%, #f4f8f5 100%);
       --surface-bg: #ffffff;
-      --navbar-bg: #ffffff;
-      --text-primary: #2d3748;
-      --text-secondary: #4a5568;
-      --border-color: #e2e8f0;
-      --primary-color: #2b6cb0;
-      --primary-hover: #1d4ed8;
-      --card-hover-shadow: rgba(0, 0, 0, 0.08);
-      --img-bg: #edf2f7;
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #152d22;
+      --text-secondary: #3b5c4c;
+      --border-color: #d1e2d9;
+      --primary-color: #236c4b;
+      --primary-hover: #174e35;
+      --card-hover-shadow: rgba(18, 48, 34, 0.08);
+      --img-bg: #e8f0ec;
     }
 
     * {
@@ -45,7 +47,10 @@
       line-height: 1.6;
       color: var(--text-primary);
       background-color: var(--bg-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: var(--bg-gradient);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      transition: color 0.3s ease;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -58,7 +63,9 @@
       align-items: center;
       padding: 1rem 2rem;
       background-color: var(--navbar-bg);
-      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #3e5436;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -72,7 +79,7 @@
     }
 
     .nav-link {
-      color: var(--text-secondary);
+      color: #f0f7ee;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
@@ -80,20 +87,20 @@
     }
 
     .nav-link:hover {
-      color: var(--primary-color);
+      color: #b6d7a8;
     }
 
     .nav-link.resume-btn {
-      background-color: var(--primary-color);
-      color: #ffffff;
+      background-color: #b6d7a8;
+      color: #10170e;
       padding: 0.5rem 1rem;
       border-radius: 6px;
       transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     .nav-link.resume-btn:hover {
-      background-color: var(--primary-hover);
-      color: #ffffff;
+      background-color: #cde4c4;
+      color: #10170e;
     }
 
     /* --- THEME TOGGLE SWITCH --- */
@@ -104,9 +111,9 @@
 
     .theme-switch {
       display: inline-block;
-      height: 26px;
+      height: 28px;
       position: relative;
-      width: 50px;
+      width: 54px;
     }
 
     .theme-switch input {
@@ -114,48 +121,57 @@
     }
 
     .slider {
-      background-color: #334155;
+      background-color: #3e5436;
       bottom: 0;
       cursor: pointer;
       left: 0;
       position: absolute;
       right: 0;
       top: 0;
-      transition: 0.4s;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
       border-radius: 34px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
+      padding: 0;
+      overflow: hidden;
       border: 1px solid var(--border-color);
     }
 
     .slider:before {
       background-color: #ffffff;
-      bottom: 2px;
       content: "";
-      height: 20px;
+      height: 22px;
+      width: 22px;
       left: 2px;
+      top: 2px;
       position: absolute;
-      transition: 0.4s;
-      width: 20px;
+      transition: transform 0.3s ease;
       border-radius: 50%;
-      z-index: 2;
+      z-index: 3;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     }
 
     .slider .sun-icon,
     .slider .moon-icon {
-      font-size: 12px;
+      width: 27px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
       user-select: none;
       line-height: 1;
+      z-index: 1;
     }
 
+    /* In light mode (which is checked), move slider right */
     input:checked+.slider {
-      background-color: #cbd5e1;
+      background-color: #b6d7a8;
     }
 
     input:checked+.slider:before {
-      transform: translateX(24px);
+      transform: translateX(26px);
     }
 
     /* --- ABOUT CONTENT --- */
@@ -191,11 +207,11 @@
       transition: color 0.3s ease;
     }
 
-    /* --- COLLAGE SCAPBOOK STYLE --- */
-    /* --- COLLAGE SCAPBOOK STYLE (MASONRY) --- */
+    /* --- COLLAGE SCRAPBOOK STYLE (MASONRY) --- */
     .collage-grid {
-      column-count: 3;
-      column-gap: 1rem;
+      column-count: 2;
+      column-gap: 1.25rem;
+      max-width: 900px;
       width: 100%;
     }
 
@@ -203,7 +219,7 @@
       break-inside: avoid;
       display: block;
       width: 100%;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       border-radius: 12px;
       overflow: hidden;
       border: 3px solid var(--surface-bg);
@@ -234,13 +250,9 @@
       .about-text-column h1 {
         font-size: 2.5rem;
       }
-
-      .collage-grid {
-        column-count: 2;
-      }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       .collage-grid {
         column-count: 1;
       }
@@ -275,16 +287,15 @@
     <div class="about-text-column">
       <h1>About Me</h1>
       <p>
-        Hi, I'm Neil Maushard! I am a mechanical engineering student passionate about bringing mechanical systems to
-        life through hands-on custom hardware, actuation, and embedded programming. Working at the
-        intersection of mechanical design, sensor integration, and control systems is what drives my
-        engineering interests.
+        Hello, my name is Christopher! I'm a Mechanical Engineering student at UIUC focused on robotics, electro-mechanical systems 
+        and aerospace. I enjoy digging into the nitty gritty details of engineering design work. Piecing apart a problem into its most basic components
+        and learing as I go is the most satisfying part of my work. More specifically I believe its best to 
+        know how to ask the right question rather than knowing how to do the next thing. Its this process of learning and exploring that 
+        makes me who I am!
       </p>
       <p>
-        Beyond CAD models and microcontrollers, I have many non-academic passions such as exploring the outdoors,
-        playing heated board games with friends, traveling with my wonderful girlfriend, trying new foods, and cooking
-        unique meals. While I love building robots, it's these experiences that have made me
-        who I am and help me step back and appreciate the world around me.
+        Past the control scripts and hand calculations, I have many non-academic passions too! Such as: exploring the outdoors,
+        playing music, cooking with friends, traveling, trying new foods, and staying active! 
       </p>
 
     </div>
@@ -292,31 +303,22 @@
     <!-- RIGHT SIDE: Collage Column -->
     <div class="collage-grid">
       <div class="collage-card item-1">
-        <img src="images/aboutme_headshot.JPEG" alt="Neil's Headshot" />
+        <img src="images/About_Me_Ocean_Pose.jpg" alt="Christopher by the ocean" />
       </div>
       <div class="collage-card item-2">
-        <img src="images/aboutme_fam.JPEG" alt="Neil with Family" />
+        <img src="images/About_Me_Grand_Canyon.jpg" alt="Christopher at the Grand Canyon" />
       </div>
       <div class="collage-card item-3">
-        <img src="images/aboutme_campfire.JPEG" alt="Campfire under stars" />
+        <img src="images/About_Me_Jazz.jpg" alt="Christopher playing jazz music" />
       </div>
       <div class="collage-card item-4">
-        <img src="images/aboutme_pointing.JPEG" alt="Neil outdoor pointing" />
+        <img src="images/About_Me_Football_Game.jpg" alt="Christopher at the football game" />
       </div>
       <div class="collage-card item-5">
-        <img src="images/aboutme_koreacarrot.jpeg" alt="Neil in Korea with carrot character" />
+        <img src="images/About_Me_1.jpg" alt="Christopher personal moments" />
       </div>
       <div class="collage-card item-6">
-        <img src="images/aboutme_koreastreetfood.jpeg" alt="Exploring Korea street food" />
-      </div>
-      <div class="collage-card item-7">
-        <img src="images/aboutme_waterfall.jpeg" alt="Scenic waterfall trail hike" />
-      </div>
-      <div class="collage-card item-8">
-        <img src="images/aboutme_internscatksills.JPEG" alt="Neil with interns in Catskills" />
-      </div>
-      <div class="collage-card item-9">
-        <img src="images/aboutme_bridge.jpg" alt="Neil on a bridge" />
+        <img src="images/About_Me_2.jpg" alt="Christopher exploring activities" />
       </div>
     </div>
 
@@ -325,50 +327,19 @@
   <!-- THEME SYNC SCRIPT -->
   <script>
     const toggleSwitch = document.querySelector('#checkbox');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlTheme = urlParams.get('theme');
     const localTheme = localStorage.getItem('theme');
-
-    let activeTheme = 'dark';
-    if (urlTheme === 'light' || urlTheme === 'dark') {
-      activeTheme = urlTheme;
-    } else if (localTheme === 'light' || localTheme === 'dark') {
-      activeTheme = localTheme;
-    }
-
-    const isLight = (activeTheme === 'light');
+    const isLight = (localTheme === 'light');
     document.body.classList.toggle('light-mode', isLight);
-    toggleSwitch.checked = isLight;
+    if (toggleSwitch) toggleSwitch.checked = isLight;
 
-    function syncLinks(theme) {
-      document.querySelectorAll('a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-          const parts = href.split('?');
-          const basePath = parts[0];
-          const searchParams = new URLSearchParams(parts[1] || '');
-          searchParams.set('theme', theme);
-          link.setAttribute('href', basePath + '?' + searchParams.toString());
-        }
+    if (toggleSwitch) {
+      toggleSwitch.addEventListener('change', (e) => {
+        const nextLight = e.target.checked;
+        const theme = nextLight ? 'light' : 'dark';
+        document.body.classList.toggle('light-mode', nextLight);
+        localStorage.setItem('theme', theme);
       });
     }
-
-    syncLinks(activeTheme);
-
-    toggleSwitch.addEventListener('change', (e) => {
-      const nextLight = e.target.checked;
-      const theme = nextLight ? 'light' : 'dark';
-
-      document.body.classList.toggle('light-mode', nextLight);
-      localStorage.setItem('theme', theme);
-
-      const url = new URL(window.location.href);
-      url.searchParams.set('theme', theme);
-      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
-
-      syncLinks(theme);
-    });
   </script>
 
 </body>

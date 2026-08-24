@@ -1,0 +1,17 @@
+# Large video backdrops and heavy assets exceeding GitHub limits
+images/experience/NMBL_TitleCard.MP4
+
+# Large raw CAD / mesh / video archives
+*.step
+*.STEP
+*.stl
+*.STL
+projects/*/unused/
+projects/*/*.MOV
+projects/*/*.mov
+
+# OS / Editor temporary files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

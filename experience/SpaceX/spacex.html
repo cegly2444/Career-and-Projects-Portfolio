@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpaceX - Payload Integration Intern</title>
+  <style>
+    :root {
+      /* Default: Night Mode - Muted Sage/Pine Theme derived from #b6d7a8 */
+      --bg-color: #10170e;
+      --bg-gradient: linear-gradient(180deg, #364a2f 0%, #253521 25%, #182315 60%, #10170e 100%);
+      --surface-bg: rgba(36, 51, 32, 0.88);
+      --hero-bg: rgba(36, 51, 32, 0.92);
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #ffffff;
+      --text-secondary: #f0f7ee;
+      --border-color: #3e5436;
+      --primary-color: #b6d7a8;
+      --primary-hover: #cde4c4;
+      --card-hover-shadow: rgba(0, 0, 0, 0.45);
+      --card-bg-glass: rgba(30, 44, 27, 0.85);
+    }
+
+    body.light-mode {
+      /* Overrides for Light Mode - Pine Green */
+      --bg-color: #f4f8f5;
+      --bg-gradient: linear-gradient(180deg, #e2eee5 0%, #edf5f0 35%, #f4f8f5 100%);
+      --surface-bg: rgba(255, 255, 255, 0.92);
+      --hero-bg: rgba(36, 51, 32, 0.95);
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #152d22;
+      --text-secondary: #3b5c4c;
+      --border-color: #d1e2d9;
+      --primary-color: #236c4b;
+      --primary-hover: #174e35;
+      --card-hover-shadow: rgba(18, 48, 34, 0.12);
+      --card-bg-glass: rgba(255, 255, 255, 0.90);
+    }
+
+    /* --- BASE STYLES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: #0b110a;
+      background-image: 
+        linear-gradient(180deg, rgba(16, 23, 14, 0.78) 0%, rgba(16, 23, 14, 0.88) 50%, rgba(16, 23, 14, 0.95) 100%),
+        url('../../images/experience/SpaceX_TitleCard.jpg');
+      background-attachment: fixed;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    body.light-mode {
+      background-color: #f4f8f5;
+      background-image: 
+        linear-gradient(180deg, rgba(244, 248, 245, 0.85) 0%, rgba(237, 245, 240, 0.90) 50%, rgba(244, 248, 245, 0.96) 100%),
+        url('../../images/experience/SpaceX_TitleCard.jpg');
+    }
+
+    /* --- TOP NAVIGATION BAR --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #3e5436;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .back-link {
+      color: #f0f7ee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .back-link:hover {
+      color: #b6d7a8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: #f0f7ee;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #b6d7a8;
+    }
+
+    .nav-link.resume-btn {
+      background-color: #b6d7a8;
+      color: #10170e;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-link.resume-btn:hover {
+      background-color: #cde4c4;
+      color: #10170e;
+    }
+
+    /* --- THEME TOGGLE SWITCH --- */
+    .theme-switch-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch {
+      display: inline-block;
+      height: 28px;
+      position: relative;
+      width: 54px;
+    }
+
+    .theme-switch input {
+      display: none;
+    }
+
+    .slider {
+      background-color: #3e5436;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      border-radius: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .slider:before {
+      background-color: #ffffff;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 2px;
+      top: 2px;
+      position: absolute;
+      transition: transform 0.3s ease;
+      border-radius: 50%;
+      z-index: 3;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    }
+
+    .slider .sun-icon,
+    .slider .moon-icon {
+      width: 27px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      user-select: none;
+      line-height: 1;
+      z-index: 1;
+    }
+
+    input:checked+.slider {
+      background-color: #b6d7a8;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    /* --- FULL-WIDTH HEADER STRIP WITH LOGO --- */
+    .project-header {
+      width: 100%;
+      background-color: rgba(36, 51, 32, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(62, 84, 54, 0.8);
+      padding: 2.25rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body.light-mode .project-header {
+      background-color: rgba(36, 51, 32, 0.94);
+      border-bottom: 1px solid #3e5436;
+    }
+
+    .project-header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      text-align: center;
+    }
+
+    .header-text-group {
+      text-align: center;
+    }
+
+    .header-text-group h1 {
+      font-size: 2.75rem;
+      color: #ffffff !important;
+      margin-bottom: 0.35rem;
+      transition: color 0.3s ease;
+    }
+
+    .header-text-group .subtitle {
+      font-size: 1.15rem;
+      color: #f0f7ee !important;
+      transition: color 0.3s ease;
+    }
+
+    .header-logo-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    .header-logo-img {
+      max-height: 120px;
+      max-width: 320px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* --- THREE COLUMN LAYOUT --- */
+    .project-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1.5rem;
+      align-items: start;
+    }
+
+    /* Sidebars styling */
+    .sidebar-left h3,
+    .sidebar-right h3 {
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border-color);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .sidebar-card {
+      background-color: var(--card-bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px var(--card-hover-shadow);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .sidebar-card-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .sidebar-card-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Skills badges */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      min-height: 20px;
+    }
+
+    .skill-badge {
+      background-color: var(--card-bg-glass);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    /* Center: Main Scrollable Content */
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .scrollable-details {
+      background-color: var(--card-bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: 0 8px 24px var(--card-hover-shadow);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .scrollable-details h2 {
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-color);
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details p {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 0;
+      transition: color 0.3s ease;
+    }
+
+    .scrollable-details p + p {
+      margin-top: 1rem;
+    }
+
+    /* --- RESPONSIVE LAYOUT --- */
+    @media (max-width: 1080px) {
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar-left,
+      .sidebar-right {
+        order: 2;
+      }
+
+      .project-content {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .project-header-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .header-text-group {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body id="home">
+
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="navbar">
+    <a href="../../index.html" class="back-link">&larr; Back to Portfolio</a>
+    <div class="theme-switch-wrapper">
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </div>
+      </label>
+    </div>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Home</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+      <a href="../../resume.pdf" target="_blank" class="nav-link resume-btn">Resume (PDF)</a>
+    </div>
+  </nav>
+
+  <!-- EXPERIENCE HEADER WITH LOGO ON RIGHT -->
+  <header class="project-header">
+    <div class="project-header-container">
+      <div class="header-text-group">
+        <h1>SpaceX</h1>
+        <p class="subtitle">Payload Integration Intern &bull; Fall 2026</p>
+      </div>
+      <div class="header-logo-badge">
+        <img src="../../images/experience/SpaceX_Logo.jpg" alt="SpaceX Logo" class="header-logo-img" />
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="project-layout">
+
+    <!-- LEFT SIDEBAR: Details & Skills -->
+    <aside class="sidebar-left">
+      <div class="sidebar-section">
+        <h3>Role Overview</h3>
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Location</div>
+          <div class="sidebar-card-value">Vandenberg Space Force Base</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Division</div>
+          <div class="sidebar-card-value">Payload Integration</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section" style="margin-top: 1.5rem;">
+        <h3>Key Skills &amp; Tools</h3>
+        <div class="skills-container"></div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Main Content -->
+    <section class="project-content">
+
+      <!-- Coming Soon Main Section -->
+      <article class="scrollable-details">
+        <h2>Experience Overview</h2>
+        <p>Coming soon, role has just started.</p>
+      </article>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR: Fast Facts -->
+    <aside class="sidebar-right">
+      <h3>Quick Facts</h3>
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Company</div>
+        <div class="sidebar-card-value">SpaceX</div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Status</div>
+        <div class="sidebar-card-value">Current Role</div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    const toggleSwitch = document.querySelector('#checkbox');
+    const localTheme = localStorage.getItem('theme');
+    const isLight = (localTheme === 'light');
+    document.body.classList.toggle('light-mode', isLight);
+    if (toggleSwitch) toggleSwitch.checked = isLight;
+
+    if (toggleSwitch) {
+      toggleSwitch.addEventListener('change', (e) => {
+        const nextLight = e.target.checked;
+        const theme = nextLight ? 'light' : 'dark';
+        document.body.classList.toggle('light-mode', nextLight);
+        localStorage.setItem('theme', theme);
+      });
+    }
+  </script>
+</body>
+
+</html>

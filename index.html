@@ -6,37 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Engineering Portfolio</title>
   <link rel="icon" type="image/x-icon" href="https://github.com/favicon.ico">
-  <meta property="og:title" content="Neil Maushard – Engineering Portfolio">
+  <meta property="og:title" content="Christopher Egly – Engineering Portfolio">
   <meta property="og:description" content="Mechanical engineering student at UIUC building robotic systems, custom hardware, and embedded control software.">
   <meta property="og:image" content="images/me_catskill.JPEG">
   <meta property="og:type" content="website">
   <style>
     :root {
-      /* Default: Night Mode */
-      --bg-color: #0f172a;
-      --surface-bg: #1e293b;
-      --navbar-bg: #0f172a;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --border-color: #334155;
-      --primary-color: #60a5fa;
-      --primary-hover: #3b82f6;
-      --card-hover-shadow: rgba(0, 0, 0, 0.4);
-      --img-bg: #1e293b;
+      /* Default: Night Mode - Muted Sage/Pine Theme derived from #b6d7a8 */
+      --bg-color: #10170e;
+      --bg-gradient: linear-gradient(180deg, #546e4b 0%, #253521 35%, #182315 60%, #10170e 100%);
+      --surface-bg: #293824;
+      --hero-bg: #243320;
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #ffffff;
+      --text-secondary: #f0f7ee;
+      --border-color: #3e5436;
+      --primary-color: #b6d7a8;
+      --primary-hover: #cde4c4;
+      --card-hover-shadow: rgba(0, 0, 0, 0.45);
+      --img-bg: #293824;
     }
 
     body.light-mode {
-      /* Overrides for Light Mode */
-      --bg-color: #f7fafc;
+      /* Overrides for Light Mode - Pine Green */
+      --bg-color: #f4f8f5;
+      --bg-gradient: linear-gradient(180deg, #e2eee5 0%, #edf5f0 35%, #f4f8f5 100%);
       --surface-bg: #ffffff;
-      --navbar-bg: #ffffff;
-      --text-primary: #2d3748;
-      --text-secondary: #4a5568;
-      --border-color: #e2e8f0;
-      --primary-color: #2b6cb0;
-      --primary-hover: #1d4ed8;
-      --card-hover-shadow: rgba(0, 0, 0, 0.08);
-      --img-bg: #edf2f7;
+      --hero-bg: #243320;
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #152d22;
+      --text-secondary: #3b5c4c;
+      --border-color: #d1e2d9;
+      --primary-color: #236c4b;
+      --primary-hover: #174e35;
+      --card-hover-shadow: rgba(18, 48, 34, 0.08);
+      --img-bg: #e8f0ec;
     }
 
     /* --- BASE STYLES --- */
@@ -51,7 +55,11 @@
       line-height: 1.6;
       color: var(--text-primary);
       background-color: var(--bg-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: var(--bg-gradient);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      min-height: 100vh;
+      transition: color 0.3s ease;
     }
 
     /* --- TOP NAVIGATION BAR --- */
@@ -61,7 +69,9 @@
       align-items: center;
       padding: 1rem 2rem;
       background-color: var(--navbar-bg);
-      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #3e5436;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -76,7 +86,7 @@
     }
 
     .nav-link {
-      color: var(--text-secondary);
+      color: #f0f7ee;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
@@ -84,23 +94,24 @@
     }
 
     .nav-link:hover {
-      color: var(--primary-color);
+      color: #b6d7a8;
     }
 
     /* Button Style for Resume Link in Navbar */
     .nav-link.resume-btn {
-      background-color: var(--primary-color);
-      color: #ffffff;
+      background-color: #b6d7a8;
+      color: #10170e;
       padding: 0.5rem 1rem;
       border-radius: 6px;
       transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     .nav-link.resume-btn:hover {
-      background-color: var(--primary-hover);
-      color: #ffffff;
+      background-color: #cde4c4;
+      color: #10170e;
     }
 
+    /* --- THEME TOGGLE SWITCH --- */
     /* --- THEME TOGGLE SWITCH --- */
     .theme-switch-wrapper {
       display: flex;
@@ -109,9 +120,9 @@
 
     .theme-switch {
       display: inline-block;
-      height: 26px;
+      height: 28px;
       position: relative;
-      width: 50px;
+      width: 54px;
     }
 
     .theme-switch input {
@@ -119,58 +130,65 @@
     }
 
     .slider {
-      background-color: #334155;
-      /* slate-700 for dark mode */
+      background-color: #3e5436;
       bottom: 0;
       cursor: pointer;
       left: 0;
       position: absolute;
       right: 0;
       top: 0;
-      transition: 0.4s;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
       border-radius: 34px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
+      padding: 0;
+      overflow: hidden;
       border: 1px solid var(--border-color);
     }
 
     .slider:before {
       background-color: #ffffff;
-      bottom: 2px;
       content: "";
-      height: 20px;
+      height: 22px;
+      width: 22px;
       left: 2px;
+      top: 2px;
       position: absolute;
-      transition: 0.4s;
-      width: 20px;
+      transition: transform 0.3s ease;
       border-radius: 50%;
-      z-index: 2;
+      z-index: 3;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     }
 
     .slider .sun-icon,
     .slider .moon-icon {
-      font-size: 12px;
+      width: 27px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
       user-select: none;
       line-height: 1;
+      z-index: 1;
     }
 
     /* In light mode (which is checked), move slider right */
     input:checked+.slider {
-      background-color: #cbd5e1;
+      background-color: #b6d7a8;
     }
 
     input:checked+.slider:before {
-      transform: translateX(24px);
+      transform: translateX(26px);
     }
 
     /* --- FULL-WIDTH HERO / ABOUT ME SECTION --- */
     .hero {
       width: 100%;
-      background-color: var(--surface-bg);
+      background-color: var(--hero-bg);
       border-bottom: 1px solid var(--border-color);
-      padding: 3rem 1.5rem;
+      padding: 2.25rem 1.5rem;
       transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
@@ -187,7 +205,7 @@
       height: 270px;
       border-radius: 20px;
       object-fit: cover;
-      border: 4px solid var(--border-color);
+      border: 4px solid #3e5436;
       flex-shrink: 0;
       transition: border-color 0.3s ease;
       max-width: 100%;
@@ -195,7 +213,7 @@
 
     .hero-text h1 {
       font-size: 4rem;
-      color: var(--text-primary);
+      color: #ffffff !important;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
       display: flex;
@@ -208,14 +226,14 @@
       height: 66px;
       object-fit: contain;
       border-radius: 8px;
-      border: 3px solid var(--border-color);
+      border: 3px solid #3e5436;
       transition: border-color 0.3s ease;
       flex-shrink: 0;
     }
 
     .hero-text p {
       font-size: 1.1rem;
-      color: var(--text-secondary);
+      color: #f0f7ee !important;
       margin-bottom: 1.25rem;
       max-width: 750px;
       transition: color 0.3s ease;
@@ -234,7 +252,7 @@
       align-items: center;
       gap: 0.5rem;
       background-color: #0077b5;
-      color: #ffffff;
+      color: #ffffff !important;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       text-decoration: none;
@@ -250,56 +268,58 @@
     .linkedin-link svg {
       width: 18px;
       height: 18px;
-      fill: currentColor;
+      fill: #ffffff !important;
     }
 
     .hero-resume-link {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background-color: var(--primary-color);
-      color: #ffffff;
+      background-color: #b6d7a8 !important;
+      color: #10170e !important;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .hero-resume-link:hover {
-      background-color: var(--primary-hover);
+      background-color: #cde4c4 !important;
+      color: #10170e !important;
     }
 
-    /* --- TWO-COLUMN CONTENT SECTION --- */
+    /* --- TWO-COLUMN CONTENT SECTION: 9/16 PROJECTS & 7/16 WORK EXPERIENCE (3 TITLE CARDS TOTAL) --- */
     .content-container {
-      max-width: 1280px;
-      margin: 2.5rem auto;
+      max-width: 1440px;
+      margin: 1.25rem auto 1.5rem auto;
       padding: 0 1.5rem;
       display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 2rem;
+      grid-template-columns: 9fr 7fr;
+      gap: 2.5rem;
       align-items: start;
     }
 
     .column h2 {
       font-size: 1.5rem;
       color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
       border-bottom: 2px solid var(--border-color);
       transition: color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* --- PROJECTS GRID & 2/3 SCALED CARDS --- */
+    /* --- PROJECTS GRID (2 TITLE CARDS PER ROW) --- */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
 
     .card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       background: var(--surface-bg);
       border: 1px solid var(--border-color);
       border-radius: 8px;
@@ -312,108 +332,218 @@
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 10px 15px -3px var(--card-hover-shadow), 0 4px 6px -2px var(--card-hover-shadow);
+      border-color: var(--primary-color);
     }
 
-    .project-card .card-img {
+    .card-img {
       width: 100%;
-      height: 200px;
+      height: 240px;
       object-fit: cover;
       background-color: var(--img-bg);
       transition: background-color 0.3s ease;
       display: block;
-      pointer-events: none;
+      position: relative;
     }
 
-    .project-card .card-body {
-      padding: 1rem;
+    .card-body {
+      padding: 1.15rem;
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
     }
 
-    .project-card .card-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 0.4rem;
-      transition: color 0.3s ease;
-    }
-
-    .project-card .card-text {
-      font-size: 0.85rem;
-      line-height: 1.45;
-      color: var(--text-secondary);
-      transition: color 0.3s ease;
-    }
-
-    /* --- WORK EXPERIENCE SIDEBAR CARDS --- */
-    .exp-card {
+    .card-title-row {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 0.85rem;
-      background: var(--surface-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1rem;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
-    .exp-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 12px -2px var(--card-hover-shadow);
-      border-color: var(--primary-color);
-    }
-
-    .exp-logo {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      flex-shrink: 0;
-      border-radius: 6px;
-      background-color: #ffffff;
-      padding: 1px;
-      border: 1px solid var(--border-color);
-    }
-
-    .exp-info {
+    .card-title-group {
       flex: 1;
       min-width: 0;
     }
 
-    .exp-role {
-      font-size: 0.95rem;
+    .card-meta {
+      font-size: 0.8rem;
       font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.5px;
+    }
+
+    .card-title-group .card-meta {
+      margin-bottom: 0.2rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.5rem;
       transition: color 0.3s ease;
     }
 
-    .exp-card:hover .exp-role {
+    .card-title-group .card-title {
+      margin-bottom: 0;
+    }
+
+    .card:hover .card-title {
       color: var(--primary-color);
     }
 
-    .exp-company {
-      font-size: 0.825rem;
+    .company-logo-badge {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      border-radius: 8px;
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 3px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .experience-card:hover .company-logo-badge {
+      transform: scale(1.08);
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-text {
+      font-size: 0.875rem;
+      line-height: 1.5;
       color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       transition: color 0.3s ease;
     }
 
-    /* --- RESPONSIVE LAYOUT FOR MOBILE --- */
-    @media (max-width: 1024px) {
-      .projects-grid {
+    /* --- WORK EXPERIENCE CARDS (7/16 COLUMN WIDE CARDS) --- */
+    .experience-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .logo-titlecard-bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-img-contain {
+      max-width: 85%;
+      max-height: 140px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .experience-card:hover .card-img-contain {
+      transform: scale(1.06);
+    }
+
+    .placeholder-img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--img-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .placeholder-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-secondary);
+      opacity: 0.6;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+    }
+
+    .placeholder-content svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--primary-color);
+    }
+
+    /* --- OTHER PROJECTS / THINGS I'M WORKING ON (UNDERNEATH FEATURED PROJECTS) --- */
+    .other-projects-section {
+      margin-top: 2rem;
+    }
+
+    .other-projects-section h2 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border-color);
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .other-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .coming-soon-card {
+      position: relative;
+    }
+
+    .coming-soon-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(16, 23, 14, 0.85);
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    body.light-mode .coming-soon-badge {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #236c4b;
+      border-color: #236c4b;
+    }
+
+    /* --- RESPONSIVE LAYOUT FOR MOBILE & TABLET --- */
+    @media (max-width: 1080px) {
+      .content-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .other-projects-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 700px) {
+      .projects-grid,
+      .other-projects-grid {
+        grid-template-columns: 1fr;
+      }
+
       .hero-container {
         flex-direction: column;
         text-align: center;
@@ -425,14 +555,6 @@
 
       .hero-buttons {
         justify-content: center;
-      }
-
-      .content-container {
-        grid-template-columns: 1fr;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
       }
 
       .nav-links {
@@ -465,17 +587,17 @@
   <!-- TOP FULL-WIDTH INTRO / ABOUT SECTION -->
   <header class="hero" id="about">
     <div class="hero-container">
-      <img src="images/me_catskill.JPEG" alt="Profile Picture" class="profile-img" />
+      <img src="images/About_Me_Ocean_Pose.JPG" alt="Profile Picture" class="profile-img" />
       <div class="hero-text">
         <h1>
-          Neil Maushard
+          Christopher Egly
           <img src="images/uiuc_logo.jpg" alt="University of Illinois Logo" class="illinois-badge" />
         </h1>
         <p>
-          Mechanical engineering student passionate about bringing mechanical systems to life :)
+          Mechanical/Robotic Engineer passionate about designing electro-mechanical systems 
         </p>
         <div class="hero-buttons">
-          <a href="https://linkedin.com/in/neil-maushard" target="_blank" class="linkedin-link">
+          <a href="https://www.linkedin.com/in/christopher-egly/" target="_blank" class="linkedin-link">
             Connect on
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path
@@ -563,98 +685,193 @@
         </a>
 
       </div>
+    
+      <!-- OTHER PROJECTS / THINGS I'M WORKING ON (UNDERNEATH FEATURED PROJECTS) -->
+      <div class="other-projects-section" id="other-projects">
+        <h2>Other Projects/Things I'm Working On</h2>
+        <div class="other-projects-grid">
+
+          <!-- Coming Soon Project 1 -->
+          <div class="card coming-soon-card">
+            <span class="coming-soon-badge">Coming Soon</span>
+            <div class="card-img placeholder-img">
+              <img src="images/projects/other_project_1.jpg" alt="Project Placeholder" style="display:none;" />
+              <div class="placeholder-content">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <span>Project Placeholder</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">In Progress</div>
+              <h3 class="card-title">Project Coming Soon</h3>
+              <p class="card-text">Exciting new robotics and electro-mechanical project currently in design and fabrication.</p>
+            </div>
+          </div>
+
+          <!-- Coming Soon Project 2 -->
+          <div class="card coming-soon-card">
+            <span class="coming-soon-badge">Coming Soon</span>
+            <div class="card-img placeholder-img">
+              <img src="images/projects/other_project_2.jpg" alt="Project Placeholder" style="display:none;" />
+              <div class="placeholder-content">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
+                <span>Project Placeholder</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">In Development</div>
+              <h3 class="card-title">Project Coming Soon</h3>
+              <p class="card-text">Embedded firmware, sensing architecture, and mechanical integration underway.</p>
+            </div>
+          </div>
+
+          <!-- Coming Soon Project 3 -->
+          <div class="card coming-soon-card">
+            <span class="coming-soon-badge">Coming Soon</span>
+            <div class="card-img placeholder-img">
+              <img src="images/projects/other_project_3.jpg" alt="Project Placeholder" style="display:none;" />
+              <div class="placeholder-content">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Project Placeholder</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-meta">Prototyping</div>
+              <h3 class="card-title">Project Coming Soon</h3>
+              <p class="card-text">CAD modeling, dynamic simulation, and initial validation phase in progress.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
 
-    <!-- SIDE COLUMN: WORK EXPERIENCE -->
+    <!-- SIDE COLUMN: WORK EXPERIENCE (7/16 PAGE WIDTH) -->
     <section class="column" id="work-experience">
       <h2>Work Experience</h2>
+      <div class="experience-grid">
 
-      <!-- Vermeer -->
-      <a href="https://www.getvermeer.com/" class="exp-card">
-        <img src="images/vermeer_logo.jpg" alt="Vermeer Logo" class="exp-logo" />
-        <div class="exp-info">
-          <h3 class="exp-role">Robotics Engineering Intern</h3>
-          <p class="exp-company">Vermeer</p>
-        </div>
-      </a>
+        <!-- SpaceX -->
+        <a href="experience/SpaceX/spacex.html" class="card experience-card">
+          <img src="images/experience/SpaceX_TitleCard.jpg" alt="SpaceX Title Card" class="card-img" />
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">Fall 2026</div>
+                <h3 class="card-title">SpaceX</h3>
+              </div>
+              <img src="images/experience/SpaceX_Logo.jpg" alt="SpaceX Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Payload Integration Intern &bull; Launch &amp; payload operations, MGSE tooling, and encapsulation readiness.</p>
+          </div>
+        </a>
 
-      <!-- KIMLAB -->
-      <a href="https://publish.illinois.edu/kimlab2020/" class="exp-card">
-        <img src="images/kimlab_logo.jpg" alt="KIMLAB Logo" class="exp-logo" />
-        <div class="exp-info">
-          <h3 class="exp-role">Research Assistant</h3>
-          <p class="exp-company">UIUC - KIMLAB</p>
-        </div>
-      </a>
+        <!-- HoneyBee Robotics -->
+        <a href="experience/HoneyBee%20Robotics/honeybee-robotics.html" class="card experience-card">
+          <img src="images/experience/HoneyBee_Robotics_TitleCard.webp" alt="HoneyBee Robotics Title Card" class="card-img" />
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">Summer 2026</div>
+                <h3 class="card-title">HoneyBee Robotics</h3>
+              </div>
+              <img src="images/experience/HoneyBee_Robotics_LOGO.webp" alt="HoneyBee Robotics Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Mechanical Engineering Intern (Subsidiary of Blue Origin) &bull; Planetary sampling mechanisms and space robotics.</p>
+          </div>
+        </a>
 
-      <!-- 370 CA -->
-      <a href="https://mechse.illinois.edu/graduate/graduate-course-offerings/me370-120261" class="exp-card">
-        <img src="images/uiuc_logo.jpg" alt="UIUC Logo" class="exp-logo" />
-        <div class="exp-info">
-          <h3 class="exp-role">Course Assistant (ME 370)</h3>
-          <p class="exp-company">UIUC - MechSE Dept.</p>
-        </div>
-      </a>
+        <!-- Novel Mobile Robotics Lab -->
+        <a href="experience/Novel%20Mobile%20Robotics%20Lab/novel-mobile-robotics-lab.html" class="card experience-card">
+          <video class="card-img" autoplay loop muted playsinline src="images/experience/NMBL_TitleCard.MP4"></video>
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">2025 – Present</div>
+                <h3 class="card-title">Novel Mobile Robotics Lab</h3>
+              </div>
+              <img src="images/experience/NMBL_LOGO.jpg" alt="Novel Mobile Robotics Lab Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Undergraduate Researcher &bull; Dynamic bio-inspired mobile robotics, hardware prototyping, and control systems.</p>
+          </div>
+        </a>
 
-      <!-- Hendrickson -->
-      <a href="https://www.hendrickson-intl.com/" class="exp-card">
-        <img src="images/hendrickson_logo.jpg" alt="Hendrickson Logo" class="exp-logo" />
-        <div class="exp-info">
-          <h3 class="exp-role">Engineering Intern</h3>
-          <p class="exp-company">Hendrickson</p>
-        </div>
-      </a>
+        <!-- Stryker -->
+        <a href="experience/Stryker/stryker.html" class="card experience-card">
+          <img src="images/experience/Stryker_TitleCard.jpg" alt="Stryker Title Card" class="card-img" />
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">Summer 2025</div>
+                <h3 class="card-title">Stryker</h3>
+              </div>
+              <img src="images/experience/Stryker_LOGO.webp" alt="Stryker Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Manufacturing Engineering Intern &bull; Sustainability Solutions line automation, custom fixtures, and quality control.</p>
+          </div>
+        </a>
 
+        <!-- Argonne National Lab 2024 -->
+        <a href="experience/Argonne%20Summer%202/argonne-2024.html" class="card experience-card">
+          <img src="images/experience/Argonne_TitleCard.png" alt="Argonne National Lab Title Card" class="card-img" />
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">Summer 2024</div>
+                <h3 class="card-title">Argonne National Lab</h3>
+              </div>
+              <img src="images/experience/Argonne_LOGO.png" alt="Argonne National Lab Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Mechanical Engineering Intern &bull; DOE SULI high-energy scientific instrumentation, FEA, and UHV cryogenic systems.</p>
+          </div>
+        </a>
+
+        <!-- Argonne National Lab 2023 -->
+        <a href="experience/Argonne%20Summer%201/argonne-2023.html" class="card experience-card">
+          <div class="card-img logo-titlecard-bg">
+            <img src="images/experience/Argonne_LOGO.png" alt="Argonne National Lab" class="card-img-contain" />
+          </div>
+          <div class="card-body">
+            <div class="card-title-row">
+              <div class="card-title-group">
+                <div class="card-meta">Summer 2023</div>
+                <h3 class="card-title">Argonne National Lab</h3>
+              </div>
+              <img src="images/experience/Argonne_LOGO.png" alt="Argonne National Lab Logo" class="company-logo-badge" />
+            </div>
+            <p class="card-text">Mechanical Engineering Intern &bull; Experimental test rig buildout, machining fabrication, and sensor monitoring.</p>
+          </div>
+        </a>
+
+      </div>
     </section>
 
   </main>
 
+
+
   <script>
     const toggleSwitch = document.querySelector('#checkbox');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlTheme = urlParams.get('theme');
     const localTheme = localStorage.getItem('theme');
-
-    let activeTheme = 'dark';
-    if (urlTheme === 'light' || urlTheme === 'dark') {
-      activeTheme = urlTheme;
-    } else if (localTheme === 'light' || localTheme === 'dark') {
-      activeTheme = localTheme;
-    }
-
-    const isLight = (activeTheme === 'light');
+    const isLight = (localTheme === 'light');
     document.body.classList.toggle('light-mode', isLight);
-    toggleSwitch.checked = isLight;
+    if (toggleSwitch) toggleSwitch.checked = isLight;
 
-    function syncLinks(theme) {
-      document.querySelectorAll('a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-          const parts = href.split('?');
-          const basePath = parts[0];
-          const searchParams = new URLSearchParams(parts[1] || '');
-          searchParams.set('theme', theme);
-          link.setAttribute('href', basePath + '?' + searchParams.toString());
-        }
+    if (toggleSwitch) {
+      toggleSwitch.addEventListener('change', (e) => {
+        const nextLight = e.target.checked;
+        const theme = nextLight ? 'light' : 'dark';
+        document.body.classList.toggle('light-mode', nextLight);
+        localStorage.setItem('theme', theme);
       });
     }
-
-    syncLinks(activeTheme);
-
-    toggleSwitch.addEventListener('change', (e) => {
-      const nextLight = e.target.checked;
-      const theme = nextLight ? 'light' : 'dark';
-
-      document.body.classList.toggle('light-mode', nextLight);
-      localStorage.setItem('theme', theme);
-
-      const url = new URL(window.location.href);
-      url.searchParams.set('theme', theme);
-      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
-
-      syncLinks(theme);
-    });
 
     document.querySelectorAll('video').forEach(video => {
       const applySpeed = () => {

@@ -12,29 +12,31 @@
 
   <style>
     :root {
-      /* Default: Night Mode */
-      --bg-color: #0f172a;
-      --surface-bg: #1e293b;
-      --navbar-bg: #0f172a;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --border-color: #334155;
-      --primary-color: #60a5fa;
-      --primary-hover: #3b82f6;
-      --card-hover-shadow: rgba(0, 0, 0, 0.4);
+      /* Default: Night Mode - Muted Sage/Pine Theme derived from #b6d7a8 */
+      --bg-color: #10170e;
+      --bg-gradient: linear-gradient(180deg, #364a2f 0%, #253521 25%, #182315 60%, #10170e 100%);
+      --surface-bg: #293824;
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #ffffff;
+      --text-secondary: #f0f7ee;
+      --border-color: #3e5436;
+      --primary-color: #b6d7a8;
+      --primary-hover: #cde4c4;
+      --card-hover-shadow: rgba(0, 0, 0, 0.45);
     }
 
     body.light-mode {
-      /* Overrides for Light Mode */
-      --bg-color: #f7fafc;
+      /* Overrides for Light Mode - Pine Green */
+      --bg-color: #f4f8f5;
+      --bg-gradient: linear-gradient(180deg, #e2eee5 0%, #edf5f0 35%, #f4f8f5 100%);
       --surface-bg: #ffffff;
-      --navbar-bg: #ffffff;
-      --text-primary: #2d3748;
-      --text-secondary: #4a5568;
-      --border-color: #e2e8f0;
-      --primary-color: #2b6cb0;
-      --primary-hover: #1d4ed8;
-      --card-hover-shadow: rgba(0, 0, 0, 0.08);
+      --navbar-bg: rgba(45, 62, 39, 0.95);
+      --text-primary: #152d22;
+      --text-secondary: #3b5c4c;
+      --border-color: #d1e2d9;
+      --primary-color: #236c4b;
+      --primary-hover: #174e35;
+      --card-hover-shadow: rgba(18, 48, 34, 0.08);
     }
 
     * {
@@ -47,7 +49,10 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text-primary);
       background-color: var(--bg-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: var(--bg-gradient);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      transition: color 0.3s ease;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -60,7 +65,9 @@
       align-items: center;
       padding: 1rem 2rem;
       background-color: var(--navbar-bg);
-      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #3e5436;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -68,7 +75,7 @@
     }
 
     .back-link {
-      color: var(--text-secondary);
+      color: #f0f7ee;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
@@ -79,13 +86,13 @@
     }
 
     .back-link:hover {
-      color: var(--primary-color);
+      color: #b6d7a8;
     }
 
     .page-title {
       font-size: 1.1rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: #ffffff;
       transition: color 0.3s ease;
     }
 
@@ -97,9 +104,9 @@
 
     .theme-switch {
       display: inline-block;
-      height: 26px;
+      height: 28px;
       position: relative;
-      width: 50px;
+      width: 54px;
     }
 
     .theme-switch input {
@@ -107,48 +114,57 @@
     }
 
     .slider {
-      background-color: #334155;
+      background-color: #3e5436;
       bottom: 0;
       cursor: pointer;
       left: 0;
       position: absolute;
       right: 0;
       top: 0;
-      transition: 0.4s;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
       border-radius: 34px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6px;
+      padding: 0;
+      overflow: hidden;
       border: 1px solid var(--border-color);
     }
 
     .slider:before {
       background-color: #ffffff;
-      bottom: 2px;
       content: "";
-      height: 20px;
+      height: 22px;
+      width: 22px;
       left: 2px;
+      top: 2px;
       position: absolute;
-      transition: 0.4s;
-      width: 20px;
+      transition: transform 0.3s ease;
       border-radius: 50%;
-      z-index: 2;
+      z-index: 3;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     }
 
     .slider .sun-icon,
     .slider .moon-icon {
-      font-size: 12px;
+      width: 27px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
       user-select: none;
       line-height: 1;
+      z-index: 1;
     }
 
+    /* In light mode (which is checked), move slider right */
     input:checked+.slider {
-      background-color: #cbd5e1;
+      background-color: #b6d7a8;
     }
 
     input:checked+.slider:before {
-      transform: translateX(24px);
+      transform: translateX(26px);
     }
 
     /* --- VIEWER CONTAINER --- */
@@ -212,7 +228,7 @@
     /* Copy Button */
     .action-btn {
       background-color: var(--primary-color);
-      color: #ffffff;
+      color: var(--bg-color);
       border: none;
       padding: 0.5rem 1rem;
       font-size: 0.85rem;
@@ -222,11 +238,12 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .action-btn:hover {
       background-color: var(--primary-hover);
+      color: var(--bg-color);
     }
 
     /* Code Display Area */
@@ -1589,20 +1606,7 @@ void setF28027EPWM2A(float controleffort){
     toggleSwitch.checked = isLight;
     updatePrismTheme(isLight);
 
-    function syncLinks(theme) {
-      document.querySelectorAll('a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-          const parts = href.split('?');
-          const basePath = parts[0];
-          const searchParams = new URLSearchParams(parts[1] || '');
-          searchParams.set('theme', theme);
-          link.setAttribute('href', basePath + '?' + searchParams.toString());
-        }
-      });
-    }
-
-    syncLinks(activeTheme);
+    
 
     toggleSwitch.addEventListener('change', (e) => {
       const nextLight = e.target.checked;
